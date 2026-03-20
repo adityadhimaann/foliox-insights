@@ -1,26 +1,39 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import UploadZone from '@/components/UploadZone';
 import Footer from '@/components/Footer';
-import { ArrowLeft } from 'lucide-react';
+import Navbar from '@/components/Navbar';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 
 const Upload = () => {
   const navigate = useNavigate();
   const [file, setFile] = useState<File | null>(null);
   const [language, setLanguage] = useState('english');
+  const [loading, setLoading] = useState(false);
 
   const handleAnalyze = () => {
-    if (file) navigate('/analyzing');
+    if (!file || loading) return;
+    setLoading(true);
+    setTimeout(() => navigate('/analyzing'), 600);
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <div className="flex-1 max-w-[600px] mx-auto w-full px-6 pt-10 pb-16">
-        <Link to="/" className="inline-flex items-center gap-1.5 text-text-muted font-body text-sm mb-8 hover:text-text-primary transition-colors">
+    <motion.div
+      className="page-bg flex flex-col"
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+    >
+      <div className="noise-overlay" />
+      <Navbar />
+      <div className="flex-1 max-w-[600px] mx-auto w-full px-6 pt-10 pb-16 relative z-2">
+        <Link to="/" className="inline-flex items-center gap-1.5 text-text-muted font-body text-sm mb-8 hover:text-foreground transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back
         </Link>
 
-        <h2 className="font-heading text-3xl md:text-4xl text-text-primary mb-2">Upload your statement</h2>
+        <h2 className="font-heading text-3xl md:text-4xl text-foreground mb-2">Upload your statement</h2>
         <p className="font-body text-base text-text-secondary mb-8">
           We support CAMS and KFintech consolidated account statements (PDF)
         </p>
@@ -33,7 +46,13 @@ const Upload = () => {
             <input
               type="text"
               placeholder="Rahul Sharma"
-              className="w-full h-12 rounded-lg border-[1.5px] border-border px-4 font-body text-[15px] text-text-primary bg-card focus:border-accent focus:ring-2 focus:ring-accent/15 outline-none transition-all duration-150"
+              className="w-full h-12 rounded-lg px-4 font-body text-[15px] text-foreground outline-none transition-all duration-150"
+              style={{
+                background: 'rgba(7,13,26,0.6)',
+                border: '1.5px solid rgba(255,255,255,0.06)',
+              }}
+              onFocus={e => { e.target.style.borderColor = 'rgba(0,229,160,0.5)'; e.target.style.boxShadow = '0 0 0 3px rgba(0,229,160,0.15)'; }}
+              onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.06)'; e.target.style.boxShadow = 'none'; }}
             />
           </div>
           <div>
@@ -41,7 +60,11 @@ const Upload = () => {
             <select
               value={language}
               onChange={e => setLanguage(e.target.value)}
-              className="w-full h-12 rounded-lg border-[1.5px] border-border px-4 font-body text-[15px] text-text-primary bg-card focus:border-accent focus:ring-2 focus:ring-accent/15 outline-none transition-all duration-150 appearance-none"
+              className="w-full h-12 rounded-lg px-4 font-body text-[15px] text-foreground outline-none transition-all duration-150 appearance-none"
+              style={{
+                background: 'rgba(7,13,26,0.6)',
+                border: '1.5px solid rgba(255,255,255,0.06)',
+              }}
             >
               <option value="english">English</option>
               <option value="hindi">हिंदी</option>
@@ -51,14 +74,25 @@ const Upload = () => {
 
         <button
           onClick={handleAnalyze}
-          disabled={!file}
-          className={`w-full h-14 mt-8 rounded-xl font-body text-[17px] font-medium transition-all duration-150 ${
-            file
-              ? 'bg-primary text-primary-foreground hover:brightness-125 cursor-pointer'
-              : 'bg-primary/50 text-primary-foreground/50 cursor-not-allowed'
+          disabled={!file || loading}
+          className={`cta-pulse w-full h-14 mt-8 rounded-xl font-body text-[17px] font-medium transition-all duration-150 flex items-center justify-center gap-2 ${
+            file && !loading
+              ? 'text-primary-foreground cursor-pointer hover:brightness-110'
+              : 'cursor-not-allowed opacity-50'
           }`}
+          style={{
+            background: file ? 'linear-gradient(135deg, #00E5A0, #00C48C)' : 'rgba(0,229,160,0.3)',
+            boxShadow: file ? '0 4px 20px rgba(0,229,160,0.35)' : 'none',
+          }}
         >
-          Analyze My Portfolio
+          {loading ? (
+            <>
+              <Loader2 className="w-5 h-5 animate-spin" />
+              Analysing...
+            </>
+          ) : (
+            'Analyze My Portfolio →'
+          )}
         </button>
 
         <p className="text-center font-body text-[13px] text-text-muted mt-4">
@@ -66,7 +100,7 @@ const Upload = () => {
         </p>
       </div>
       <Footer />
-    </div>
+    </motion.div>
   );
 };
 
