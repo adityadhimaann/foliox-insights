@@ -36,7 +36,7 @@ const ExpenseDragCard = () => (
             <span className="text-text-secondary">Regular Plan</span>
             <span className="font-mono px-2 py-0.5 rounded bg-accent-warn/20 text-accent-warn text-xs">₹18.2L</span>
           </div>
-          <div className="h-2.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
+          <div className="h-2.5 rounded-full overflow-hidden bg-foreground/5">
             <motion.div
               className="h-full rounded-full"
               style={{ background: 'linear-gradient(90deg, #FF6B35, #E55A2B)' }}
@@ -52,7 +52,7 @@ const ExpenseDragCard = () => (
             <span className="text-text-secondary">Direct Plan</span>
             <span className="font-mono px-2 py-0.5 rounded bg-primary/20 text-primary text-xs">₹21.4L</span>
           </div>
-          <div className="h-2.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
+          <div className="h-2.5 rounded-full overflow-hidden bg-foreground/5">
             <motion.div
               className="h-full rounded-full"
               style={{ background: 'linear-gradient(90deg, #00E5A0, #00C48C)' }}

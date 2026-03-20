@@ -27,7 +27,7 @@ const ScoreRing = ({ score }: { score: number }) => {
             <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="rgba(0,229,160,0.8)" />
           </filter>
         </defs>
-        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={stroke} />
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="currentColor" strokeOpacity={0.1} strokeWidth={stroke} />
         <motion.circle
           cx={size/2} cy={size/2} r={r} fill="none"
           stroke="url(#scoreGradient)" strokeWidth={stroke} strokeLinecap="round"
@@ -52,7 +52,7 @@ const FundSidebar = () => {
   const visibleFunds = showAll ? funds : funds.slice(0, 3);
 
   return (
-    <aside className="w-full lg:w-[340px] lg:border-r border-white/5 p-6 space-y-6">
+    <aside className="w-full lg:w-[340px] lg:border-r border-border/40 p-6 space-y-6">
       <ScoreRing score={72} />
 
       {/* Score Breakdown */}
@@ -70,7 +70,7 @@ const FundSidebar = () => {
                 <span className="font-body text-sm text-text-secondary">{item.category}</span>
                 <span className="font-mono text-[13px] text-primary">{item.score}/{item.max}</span>
               </div>
-              <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
+              <div className="h-1.5 rounded-full overflow-hidden bg-foreground/5">
                 <motion.div
                   className="h-full rounded-full"
                   style={{ background: 'linear-gradient(90deg, #00E5A0, #3B82F6)' }}
@@ -84,7 +84,7 @@ const FundSidebar = () => {
         </div>
       </div>
 
-      <div className="h-px bg-white/5" />
+      <div className="h-px bg-border/40" />
 
       {/* Fund Summary */}
       <div>
@@ -120,7 +120,7 @@ const FundSidebar = () => {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 + i * 0.06 }}
-              className="p-3 rounded-xl border border-white/5 hover:bg-primary-dim hover:border-l-2 hover:border-l-primary transition-all duration-150"
+              className="p-3 rounded-xl border border-border/40 hover:bg-primary-dim hover:border-l-2 hover:border-l-primary transition-all duration-150"
             >
               <p className="font-body text-[13px] text-foreground leading-snug line-clamp-2 mb-1.5">{fund.name}</p>
               <span className="inline-flex px-2 py-0.5 rounded-full text-[10px] font-body font-medium bg-primary-dim text-primary border border-primary/10 mb-1.5">

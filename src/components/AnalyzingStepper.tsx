@@ -124,7 +124,7 @@ const AnalyzingStepper = ({ onComplete }: AnalyzingStepperProps) => {
         </div>
 
         {/* Progress bar */}
-        <div className="h-[3px] rounded-full overflow-hidden mb-6 relative" style={{ background: 'rgba(255,255,255,0.06)' }}>
+        <div className="h-[3px] rounded-full overflow-hidden mb-6 relative bg-foreground/5">
           <motion.div
             className="h-full rounded-full relative overflow-hidden"
             style={{ background: 'linear-gradient(90deg, #00E5A0, #3B82F6)' }}

@@ -4,75 +4,95 @@ import { useRef } from 'react';
 
 const words = "Know Exactly How Your Mutual Funds Are Performing".split(" ");
 
-const FloatingCard = () => (
-  <div className="hidden lg:block absolute right-[5%] top-1/2 -translate-y-1/2"
-    style={{ perspective: '1000px' }}
-  >
-    <motion.div
-      animate={{ y: [0, -12, 0] }}
-      transition={{ duration: 4, ease: 'easeInOut', repeat: Infinity }}
-      whileHover={{ rotateY: -6, rotateX: 2, scale: 1.02 }}
-      className="w-[320px] p-5 rounded-[20px]"
-      style={{
-        background: 'linear-gradient(135deg, rgba(13,25,48,0.9), rgba(15,32,64,0.8))',
-        border: '1px solid rgba(0,229,160,0.2)',
-        boxShadow: '0 0 0 1px rgba(0,229,160,0.1), 0 20px 60px rgba(0,0,0,0.5), 0 0 80px rgba(0,229,160,0.08)',
-        backdropFilter: 'blur(20px)',
-        transform: 'perspective(1000px) rotateY(-12deg) rotateX(4deg)',
-        transformStyle: 'preserve-3d',
-      }}
+const DeviceMockups = () => {
+  if (window.self !== window.top) return null;
+
+  return (
+    <div className="hidden lg:block absolute right-[1%] xl:right-[5%] top-1/2 -translate-y-1/2 w-[540px] z-10"
+      style={{ perspective: '1200px' }}
     >
-      <div className="flex justify-between items-center mb-3">
-        <span className="font-body text-[11px] text-text-secondary uppercase tracking-wider">Portfolio Health</span>
-        <span className="font-mono text-lg text-primary font-medium" style={{ textShadow: '0 0 12px rgba(0,229,160,0.5)' }}>72/100</span>
-      </div>
-      <div className="h-px bg-primary/20 mb-3" />
-      <div className="h-1.5 rounded-full bg-white/5 mb-4 overflow-hidden">
-        <motion.div
-          className="h-full rounded-full"
-          style={{ background: 'linear-gradient(90deg, #00E5A0, #3B82F6)', width: '72%' }}
-          initial={{ width: 0 }}
-          animate={{ width: '72%' }}
-          transition={{ duration: 1.5, ease: 'easeOut', delay: 0.5 }}
-        />
-      </div>
-      <div className="flex justify-between text-center">
-        {[
-          { label: 'XIRR', value: '11.4%' },
-          { label: 'Corpus', value: '₹8L' },
-          { label: 'Funds', value: '5' },
-        ].map(s => (
-          <div key={s.label}>
-            <p className="font-mono text-sm text-foreground">{s.value}</p>
-            <p className="font-body text-[10px] text-text-muted mt-0.5">{s.label}</p>
+      <motion.div
+        className="relative"
+        style={{
+          transform: 'perspective(1200px) rotateY(-12deg) rotateX(4deg)',
+          transformStyle: 'preserve-3d',
+        }}
+      >
+        {/* Realistic Laptop Mockup (MacBook style) */}
+        <div className="relative group/laptop">
+          {/* Main Display Frame */}
+          <div className="relative rounded-[22px] p-[10px] bg-[#0f0f0f] border border-[#2a2a2a] shadow-2xl overflow-hidden aspect-[16/10] w-[500px] ring-1 ring-white/10 transition-transform duration-300">
+            {/* Glossy Reflection Overlay */}
+            <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-tr from-white/0 via-white/5 to-white/10 opacity-30"></div>
+            
+            {/* Notch */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-[18px] bg-black rounded-b-xl z-30 flex items-center justify-center gap-1.5 px-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#1a1a1a] border border-white/5"></div>
+              <div className="w-1 h-1 rounded-full bg-[#1a1a1a]"></div>
+            </div>
+
+            {/* Desktop Website Video */}
+            <div className="w-full h-full overflow-hidden rounded-[12px] bg-black relative z-10">
+              <video 
+                src="/dekstop.mp4" 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                className="w-full h-full object-cover object-top select-none"
+              />
+            </div>
           </div>
-        ))}
-      </div>
-      {/* Mini sparkline */}
-      <svg className="w-full h-8 mt-3" viewBox="0 0 280 30" fill="none">
-        <path d="M0 25 Q30 22 60 20 T120 15 T180 10 T240 8 T280 3" stroke="rgba(0,229,160,0.4)" strokeWidth="1.5" fill="none" />
-        <path d="M0 25 Q30 22 60 20 T120 15 T180 10 T240 8 T280 3 V30 H0 Z" fill="url(#sparkGrad)" />
-        <defs>
-          <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="rgba(0,229,160,0.15)" />
-            <stop offset="100%" stopColor="rgba(0,229,160,0)" />
-          </linearGradient>
-        </defs>
-      </svg>
-    </motion.div>
-    {/* Reflection */}
-    <div className="w-[320px] mt-2 opacity-[0.08] pointer-events-none"
-      style={{
-        transform: 'perspective(1000px) rotateY(-12deg) rotateX(4deg) scaleY(-1)',
-        maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.3), transparent 60%)',
-        WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.3), transparent 60%)',
-        background: 'linear-gradient(135deg, rgba(13,25,48,0.9), rgba(15,32,64,0.8))',
-        height: '80px',
-        borderRadius: '20px',
-      }}
-    />
-  </div>
-);
+          
+          {/* Macbook Base / Chassis */}
+          <div className="relative group">
+            {/* Top Surface of Base */}
+            <div className="w-[500px] h-[6px] bg-[#d1d5db] dark:bg-[#323232] rounded-t-sm relative shadow-inner">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-[2px] bg-black/10 rounded-full"></div>
+            </div>
+            {/* Front Edge of Base */}
+            <div className="w-[500px] h-3 bg-gradient-to-b from-[#b1b5bb] to-[#81858b] dark:from-[#2a2a2a] dark:to-[#1a1a1a] rounded-b-2xl relative flex justify-center shadow-lg border-t border-white/10">
+              {/* Thumb Notch */}
+              <div className="w-20 h-1.5 bg-[#6b7280] dark:bg-[#0f0f0f] rounded-b-lg opacity-80"></div>
+            </div>
+            {/* Feet/Shadow under base */}
+            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-[94%] h-[2px] bg-black/40 blur-[2px] rounded-full"></div>
+          </div>
+        </div>
+
+        {/* Mobile Mockup overlapping */}
+        <motion.div
+          className="absolute bottom-20 -right-8 w-[150px] aspect-[9/19.5] rounded-[32px] border-[6px] border-black bg-black shadow-2xl overflow-hidden z-20 ring-1 ring-white/10"
+        >
+          <div className="w-full h-full overflow-hidden rounded-[26px] bg-black relative">
+            {/* Dynamic Island */}
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 w-14 h-4 bg-black rounded-[10px] z-10"></div>
+            <video 
+              src="/mobile.mp4" 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="w-full h-full object-cover select-none"
+            />
+          </div>
+        </motion.div>
+        
+        {/* Reflection */}
+        <div className="w-[500px] mt-2 opacity-[0.08] pointer-events-none"
+          style={{
+            transform: 'scaleY(-1)',
+            maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.3), transparent 60%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0.3), transparent 60%)',
+            background: 'hsl(var(--bg-card))',
+            height: '100px',
+            borderRadius: '20px',
+          }}
+        />
+      </motion.div>
+    </div>
+  );
+};
 
 const AnimatedCounter = ({ value, suffix = '' }: { value: string; suffix?: string }) => {
   const ref = useRef(null);
@@ -97,14 +117,14 @@ const HeroSection = () => {
   return (
     <section className="relative overflow-hidden" style={{ minHeight: '90vh' }}>
       <div className="max-w-7xl mx-auto px-6 py-24 md:py-[120px] relative">
-        <div className="max-w-[640px]">
+        <div className="max-w-[640px] relative z-20">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className="text-primary text-[13px] font-body tracking-[0.08em] uppercase mb-6"
           >
-            Powered by AI · Free · Takes 10 seconds
+            Strong AGENTIC AI · Free · Takes 10 seconds
             <span className="inline-block w-[2px] h-4 bg-primary ml-1 align-middle" style={{ animation: 'typing-dots 1s step-end infinite' }} />
           </motion.p>
 
@@ -156,7 +176,7 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        <FloatingCard />
+        <DeviceMockups />
 
         {/* Mobile stat pills */}
         <div className="lg:hidden flex overflow-x-auto gap-3 mt-10 pb-2 -mx-2 px-2 snap-x snap-mandatory">
@@ -177,7 +197,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.6 }}
-          className="hidden lg:flex items-center justify-center gap-0 mt-16 pt-10 border-t border-white/5"
+          className="hidden lg:flex items-center justify-center gap-0 mt-16 pt-10 border-t border-border/40"
         >
           {[
             { number: '14 Cr+', label: 'Demat Holders in India' },
@@ -185,7 +205,7 @@ const HeroSection = () => {
             { number: '10 Sec', label: 'Analysis' },
           ].map((stat, i) => (
             <div key={stat.label} className="flex items-center">
-              {i > 0 && <div className="w-px h-10 bg-white/10 mx-10" />}
+              {i > 0 && <div className="w-px h-10 bg-border/40 mx-10" />}
               <div className="text-center px-4 py-2 rounded-lg hover:bg-primary-dim transition-colors duration-150">
                 <AnimatedCounter value={stat.number} />
                 <p className="font-body text-[13px] text-text-muted mt-1">{stat.label}</p>

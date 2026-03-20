@@ -46,13 +46,9 @@ const Upload = () => {
             <input
               type="text"
               placeholder="Rahul Sharma"
-              className="w-full h-12 rounded-lg px-4 font-body text-[15px] text-foreground outline-none transition-all duration-150"
-              style={{
-                background: 'rgba(7,13,26,0.6)',
-                border: '1.5px solid rgba(255,255,255,0.06)',
-              }}
-              onFocus={e => { e.target.style.borderColor = 'rgba(0,229,160,0.5)'; e.target.style.boxShadow = '0 0 0 3px rgba(0,229,160,0.15)'; }}
-              onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.06)'; e.target.style.boxShadow = 'none'; }}
+              className="w-full h-12 rounded-lg px-4 font-body text-[15px] text-foreground outline-none transition-all duration-150 bg-foreground/5 dark:bg-[#070d1a]/60 border-[1.5px] border-border/40"
+              onFocus={e => { e.currentTarget.style.borderColor = 'rgba(0,229,160,0.5)'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,229,160,0.15)'; }}
+              onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.boxShadow = 'none'; }}
             />
           </div>
           <div>
@@ -60,11 +56,7 @@ const Upload = () => {
             <select
               value={language}
               onChange={e => setLanguage(e.target.value)}
-              className="w-full h-12 rounded-lg px-4 font-body text-[15px] text-foreground outline-none transition-all duration-150 appearance-none"
-              style={{
-                background: 'rgba(7,13,26,0.6)',
-                border: '1.5px solid rgba(255,255,255,0.06)',
-              }}
+              className="w-full h-12 rounded-lg px-4 font-body text-[15px] text-foreground outline-none transition-all duration-150 appearance-none bg-foreground/5 dark:bg-[#070d1a]/60 border-[1.5px] border-border/40"
             >
               <option value="english">English</option>
               <option value="hindi">हिंदी</option>

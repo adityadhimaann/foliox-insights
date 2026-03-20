@@ -12,9 +12,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return (
     <div className="rounded-lg px-4 py-3 border"
       style={{
-        background: 'rgba(7,13,26,0.9)',
+        background: 'var(--bg-card)',
         backdropFilter: 'blur(20px)',
-        borderColor: 'rgba(0,229,160,0.25)',
+        borderColor: 'rgba(0,229,160,0.4)',
       }}
     >
       <p className="font-body text-[13px] text-foreground font-medium">{label}</p>
@@ -49,7 +49,7 @@ const XirrChart = () => (
               <stop offset="100%" stopColor="#E55A2B" />
             </linearGradient>
           </defs>
-          <XAxis dataKey="name" tick={{ fontSize: 12, fontFamily: 'DM Mono', fill: '#4A6080' }} axisLine={{ stroke: 'rgba(255,255,255,0.06)' }} tickLine={false} />
+          <XAxis dataKey="name" tick={{ fontSize: 12, fontFamily: 'DM Mono', fill: '#4A6080' }} axisLine={{ stroke: 'currentColor', opacity: 0.1 }} tickLine={false} />
           <YAxis tick={{ fontSize: 12, fontFamily: 'DM Mono', fill: '#4A6080' }} unit="%" axisLine={false} tickLine={false} />
           <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.03)' }} />
           <ReferenceLine y={niftyXirr} stroke="#3B82F6" strokeDasharray="4 4" strokeWidth={2}

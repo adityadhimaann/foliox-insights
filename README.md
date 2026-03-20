@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# FolioX Insights
 
 TODO: Document your project here

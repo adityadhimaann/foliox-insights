@@ -7,9 +7,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return (
     <div className="rounded-lg px-4 py-3 border"
       style={{
-        background: 'rgba(7,13,26,0.9)',
+        background: 'var(--bg-card)',
         backdropFilter: 'blur(20px)',
-        borderColor: 'rgba(0,229,160,0.25)',
+        borderColor: 'rgba(0,229,160,0.4)',
       }}
     >
       <p className="font-body text-[13px] text-foreground font-medium mb-1">{label}</p>
@@ -42,7 +42,7 @@ const TimelineChart = () => (
               <stop offset="100%" stopColor="#00E5A0" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis dataKey="year" tick={{ fontSize: 11, fontFamily: 'DM Mono', fill: '#4A6080' }} axisLine={{ stroke: 'rgba(255,255,255,0.06)' }} tickLine={false} />
+          <XAxis dataKey="year" tick={{ fontSize: 11, fontFamily: 'DM Mono', fill: '#4A6080' }} axisLine={{ stroke: 'currentColor', opacity: 0.1 }} tickLine={false} />
           <YAxis tickFormatter={(v) => `₹${(v / 100000).toFixed(0)}L`} tick={{ fontSize: 11, fontFamily: 'DM Mono', fill: '#4A6080' }} axisLine={false} tickLine={false} />
           <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'rgba(255,255,255,0.1)', strokeDasharray: '4 4' }} />
           <Area type="monotone" dataKey="invested" stroke="#3B82F6" fill="url(#investedGrad2)" strokeWidth={2}

@@ -17,7 +17,7 @@ const ScoreRing = ({ score }: { score: number }) => {
           <stop offset="100%" stopColor="#3B82F6" />
         </linearGradient>
       </defs>
-      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={stroke} />
+      <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="currentColor" className="text-foreground/10" strokeWidth={stroke} />
       <motion.circle
         cx={size/2} cy={size/2} r={r} fill="none"
         stroke="url(#miniRingGrad)" strokeWidth={stroke} strokeLinecap="round"
@@ -35,9 +35,9 @@ const SummaryBar = () => (
     initial={{ opacity: 0, y: -20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.4 }}
-    className="w-full border-b border-white/5"
+    className="w-full border-b border-border/40"
     style={{
-      background: 'linear-gradient(180deg, rgba(0,229,160,0.08) 0%, transparent 100%), hsla(218,50%,12%,0.8)',
+      background: 'linear-gradient(180deg, rgba(0,229,160,0.1), transparent 100%), var(--bg-card)',
       backdropFilter: 'blur(20px)',
     }}
   >
@@ -61,7 +61,7 @@ const SummaryBar = () => (
           { value: `${niftyXirr}%`, label: 'Nifty 50 XIRR', color: 'text-accent-warn' },
           { value: formatCurrency(totalCorpus), label: 'Total Value', color: 'text-foreground' },
         ].map(stat => (
-          <div key={stat.label} className="px-5 py-2 rounded-lg border border-white/5" style={{ background: 'rgba(255,255,255,0.05)' }}>
+          <div key={stat.label} className="px-5 py-2 rounded-lg border border-border/40 bg-foreground/5">
             <p className={`font-mono text-xl md:text-2xl ${stat.color}`}>{stat.value}</p>
             <p className="font-body text-[11px] text-text-muted mt-0.5">{stat.label}</p>
           </div>
@@ -69,7 +69,7 @@ const SummaryBar = () => (
       </div>
 
       <div className="flex gap-3">
-        <button className="h-10 px-4 rounded-lg border border-border-glow text-foreground font-body text-sm flex items-center gap-2 transition-all duration-150 hover:bg-white/5"
+        <button className="h-10 px-4 rounded-lg border border-border-glow text-foreground font-body text-sm flex items-center gap-2 transition-all duration-150 hover:bg-foreground/5"
           style={{ backdropFilter: 'blur(10px)' }}
         >
           <Download className="w-4 h-4" /> Download

@@ -33,10 +33,8 @@ const UploadZone = ({ onFileSelected }: UploadZoneProps) => {
       onDragLeave={() => setIsDragging(false)}
       onDrop={handleDrop}
       onClick={() => !file && document.getElementById('file-input')?.click()}
-      className="relative h-[280px] rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all duration-200"
+      className="relative h-[280px] rounded-xl flex flex-col items-center justify-center cursor-pointer transition-all duration-200 bg-foreground/5 dark:bg-[#070d1a]/60 border-2 border-dashed border-primary/20 hover:border-primary/50"
       style={{
-        background: isDragging ? 'rgba(0,229,160,0.04)' : file ? 'rgba(0,229,160,0.02)' : 'rgba(7,13,26,0.6)',
-        border: `2px dashed ${file ? 'rgba(0,229,160,0.5)' : isDragging ? 'rgba(0,229,160,0.5)' : 'rgba(0,229,160,0.2)'}`,
         backdropFilter: 'blur(10px)',
         boxShadow: isDragging ? '0 0 0 4px rgba(0,229,160,0.06), inset 0 0 40px rgba(0,229,160,0.04)' : 'none',
       }}

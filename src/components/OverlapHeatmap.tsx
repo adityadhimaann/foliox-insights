@@ -5,7 +5,7 @@ import { AlertTriangle } from 'lucide-react';
 const shortNames = funds.map(f => f.shortName);
 
 const getCellStyle = (value: number, isSelf: boolean) => {
-  if (isSelf) return { background: 'rgba(255,255,255,0.03)', color: '#4A6080' };
+  if (isSelf) return { background: 'var(--bg-muted)', color: '#4A6080' };
   if (value > 60) return { background: 'rgba(255,107,53,0.28)', color: '#FF4500', border: '1px solid rgba(255,107,53,0.5)', boxShadow: '0 0 12px rgba(255,107,53,0.2)' };
   if (value > 40) return { background: 'rgba(255,107,53,0.15)', color: '#FF6B35' };
   if (value > 20) return { background: 'rgba(245,158,11,0.10)', color: '#D97706' };
