@@ -8,9 +8,7 @@ export default {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+      screens: { "2xl": "1400px" },
     },
     extend: {
       fontFamily: {
@@ -20,7 +18,7 @@ export default {
       },
       colors: {
         border: "hsl(var(--border))",
-        "border-strong": "hsl(var(--border-strong))",
+        "border-glow": "hsl(var(--border-glow))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
@@ -28,6 +26,8 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          glow: "hsl(var(--primary-glow))",
+          dim: "hsl(var(--primary-dim))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -46,6 +46,8 @@ export default {
           foreground: "hsl(var(--accent-foreground))",
           warn: "hsl(var(--accent-warn))",
           "warn-foreground": "hsl(var(--accent-warn-foreground))",
+          gold: "hsl(var(--accent-gold))",
+          blue: "hsl(var(--accent-blue))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -56,6 +58,7 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         "bg-dark": "hsl(var(--bg-dark))",
+        "bg-elevated": "hsl(var(--bg-elevated))",
         "text-primary": "hsl(var(--text-primary))",
         "text-secondary": "hsl(var(--text-secondary))",
         "text-muted": "hsl(var(--text-muted))",
@@ -86,20 +89,10 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "fade-up": {
-          "0%": { opacity: "0", transform: "translateY(12px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        "progress-fill": {
-          "0%": { width: "0%" },
-          "100%": { width: "var(--fill-width)" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-up": "fade-up 0.3s ease-out forwards",
-        "progress-fill": "progress-fill 0.8s ease-out forwards",
       },
     },
   },

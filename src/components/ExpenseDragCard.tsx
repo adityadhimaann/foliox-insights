@@ -3,37 +3,43 @@ import { weightedExpenseRatio, tenYearExpenseDrag, formatCurrency } from '@/lib/
 
 const ExpenseDragCard = () => (
   <motion.div
-    initial={{ opacity: 0, y: 12 }}
+    initial={{ opacity: 0, y: 24 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    className="bg-card rounded-xl border border-border p-6 shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.10)] transition-shadow duration-200"
+    transition={{ duration: 0.4, delay: 0.16 }}
+    className="glass-card p-6"
   >
-    <h3 className="font-body text-lg font-bold text-text-primary mb-6">What You're Paying in Expenses</h3>
+    <h3 className="card-section-header mb-6">EXPENSE ANALYSIS</h3>
 
-    <div className="grid md:grid-cols-2 gap-8 mb-8">
+    <div className="grid md:grid-cols-2 gap-8 mb-8 ml-[18px]">
       <div>
         <p className="font-body text-sm text-text-secondary mb-2">Weighted Avg. Expense Ratio</p>
-        <p className="font-mono text-4xl text-accent-warn font-medium">{weightedExpenseRatio}%</p>
+        <p className="font-mono text-4xl text-accent-warn font-medium" style={{ textShadow: '0 0 30px rgba(255,107,53,0.4)' }}>
+          {weightedExpenseRatio}%
+        </p>
         <p className="font-body text-[13px] text-text-muted mt-1">Category avg. is 0.9% for direct plans</p>
       </div>
       <div>
         <p className="font-body text-sm text-text-secondary mb-2">10-Year Expense Drag</p>
-        <p className="font-mono text-4xl text-accent-warn font-medium">{formatCurrency(tenYearExpenseDrag)}</p>
+        <p className="font-mono text-4xl text-accent-warn font-medium" style={{ textShadow: '0 0 30px rgba(255,107,53,0.4)' }}>
+          {formatCurrency(tenYearExpenseDrag)}
+        </p>
         <p className="font-body text-[13px] text-text-muted mt-1">The silent cost of regular plans</p>
       </div>
     </div>
 
-    <div>
-      <p className="font-body text-sm text-text-secondary mb-3">Your Regular Plan vs Direct Plan (10-year projection)</p>
-      <div className="space-y-3">
+    <div className="ml-[18px]">
+      <p className="font-body text-sm text-text-secondary mb-4">Your Regular Plan vs Direct Plan (10-year projection)</p>
+      <div className="space-y-4">
         <div>
-          <div className="flex justify-between font-body text-[13px] mb-1">
+          <div className="flex justify-between font-body text-[13px] mb-1.5">
             <span className="text-text-secondary">Regular Plan</span>
-            <span className="font-mono text-text-primary">₹18.2L</span>
+            <span className="font-mono px-2 py-0.5 rounded bg-accent-warn/20 text-accent-warn text-xs">₹18.2L</span>
           </div>
-          <div className="h-2 rounded-full bg-border overflow-hidden">
+          <div className="h-2.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
             <motion.div
-              className="h-full rounded-full bg-accent-warn"
+              className="h-full rounded-full"
+              style={{ background: 'linear-gradient(90deg, #FF6B35, #E55A2B)' }}
               initial={{ width: 0 }}
               whileInView={{ width: '72%' }}
               viewport={{ once: true }}
@@ -42,13 +48,14 @@ const ExpenseDragCard = () => (
           </div>
         </div>
         <div>
-          <div className="flex justify-between font-body text-[13px] mb-1">
+          <div className="flex justify-between font-body text-[13px] mb-1.5">
             <span className="text-text-secondary">Direct Plan</span>
-            <span className="font-mono text-text-primary">₹21.4L</span>
+            <span className="font-mono px-2 py-0.5 rounded bg-primary/20 text-primary text-xs">₹21.4L</span>
           </div>
-          <div className="h-2 rounded-full bg-border overflow-hidden">
+          <div className="h-2.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
             <motion.div
-              className="h-full rounded-full bg-accent"
+              className="h-full rounded-full"
+              style={{ background: 'linear-gradient(90deg, #00E5A0, #00C48C)' }}
               initial={{ width: 0 }}
               whileInView={{ width: '85%' }}
               viewport={{ once: true }}
@@ -57,7 +64,9 @@ const ExpenseDragCard = () => (
           </div>
         </div>
       </div>
-      <p className="font-body text-[13px] text-text-muted mt-3">Switching to direct plans could save you ₹3.2L over 10 years.</p>
+      <p className="font-body text-[13px] text-text-muted mt-4">
+        Switching to direct plans could save you <span className="text-accent-warn font-medium">₹3.2L</span> over 10 years.
+      </p>
     </div>
   </motion.div>
 );
