@@ -9,7 +9,9 @@ import Index from "./pages/Index";
 import Upload from "./pages/Upload";
 import Analyzing from "./pages/Analyzing";
 import Results from "./pages/Results";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import { AuthProvider } from "./context/AuthContext";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +24,7 @@ const AnimatedRoutes = () => {
         <Route path="/upload" element={<Upload />} />
         <Route path="/analyzing" element={<Analyzing />} />
         <Route path="/results" element={<Results />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
@@ -32,11 +35,13 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider forcedTheme="light" attribute="class" defaultTheme="light">
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <AnimatedRoutes />
-        </BrowserRouter>
+        <AuthProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <AnimatedRoutes />
+          </BrowserRouter>
+        </AuthProvider>
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>

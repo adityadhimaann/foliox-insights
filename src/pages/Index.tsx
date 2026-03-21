@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
+import DemoSection from '@/components/DemoSection';
 import HowItWorks from '@/components/HowItWorks';
-import Footer from '@/components/Footer';
+import Testimonials from '@/components/Testimonials';
+import TrustAndFAQ from '@/components/TrustAndFAQ';
+import SubscribeSection from '@/components/SubscribeSection';
 
 const Index = () => (
   <motion.div
@@ -15,8 +18,11 @@ const Index = () => (
     <div className="noise-overlay" />
     <Navbar />
     <HeroSection />
+    <DemoSection />
     <HowItWorks />
-    <Footer />
+    <Testimonials />
+    <TrustAndFAQ />
+    <SubscribeSection />
   </motion.div>
 );
 

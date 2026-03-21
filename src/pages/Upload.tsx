@@ -5,17 +5,44 @@ import UploadZone from '@/components/UploadZone';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { ArrowLeft, Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 const Upload = () => {
   const navigate = useNavigate();
   const [file, setFile] = useState<File | null>(null);
-  const [language, setLanguage] = useState('english');
+  const [name, setName] = useState('');
+  const [language, setLanguage] = useState('en');
   const [loading, setLoading] = useState(false);
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
     if (!file || loading) return;
     setLoading(true);
-    setTimeout(() => navigate('/analyzing'), 600);
+
+    const formData = new FormData();
+    formData.append('file', file);
+    if (name) formData.append('name', name);
+    formData.append('language', language);
+
+    try {
+      const response = await fetch('http://localhost:8000/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.detail || 'Upload failed');
+      }
+
+      const data = await response.json();
+      const sessionId = data.session_id;
+
+      // Navigate to analyzing page with session ID
+      navigate('/analyzing', { state: { sessionId, language } });
+    } catch (error: any) {
+      toast.error(error.message || "Failed to upload statement");
+      setLoading(false);
+    }
   };
 
   return (
@@ -46,6 +73,8 @@ const Upload = () => {
             <input
               type="text"
               placeholder="Rahul Sharma"
+              value={name}
+              onChange={e => setName(e.target.value)}
               className="w-full h-12 rounded-lg px-4 font-body text-[15px] text-foreground outline-none transition-all duration-150 bg-foreground/5 dark:bg-[#070d1a]/60 border-[1.5px] border-border/40"
               onFocus={e => { e.currentTarget.style.borderColor = 'rgba(0,229,160,0.5)'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(0,229,160,0.15)'; }}
               onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)'; e.currentTarget.style.boxShadow = 'none'; }}
@@ -58,8 +87,8 @@ const Upload = () => {
               onChange={e => setLanguage(e.target.value)}
               className="w-full h-12 rounded-lg px-4 font-body text-[15px] text-foreground outline-none transition-all duration-150 appearance-none bg-foreground/5 dark:bg-[#070d1a]/60 border-[1.5px] border-border/40"
             >
-              <option value="english">English</option>
-              <option value="hindi">हिंदी</option>
+              <option value="en">English</option>
+              <option value="hi">हिंदी</option>
             </select>
           </div>
         </div>
@@ -80,7 +109,7 @@ const Upload = () => {
           {loading ? (
             <>
               <Loader2 className="w-5 h-5 animate-spin" />
-              Analysing...
+              Uploading...
             </>
           ) : (
             'Analyze My Portfolio →'

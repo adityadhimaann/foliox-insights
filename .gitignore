@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# FolioX Backend
+foliox-backend/.env
+foliox-backend/__pycache__/
+foliox-backend/.venv/
+foliox-backend/parser_debug.log
+.python-version
+.pytest_cache/
+.coverage
+htmlcov/
