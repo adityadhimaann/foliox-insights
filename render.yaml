@@ -1,0 +1,27 @@
+services:
+  # FolioX FastAPI Backend
+  - type: web
+    name: foliox-backend
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
+    rootDir: foliox-backend
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: foliox-redis
+          property: connectionString
+      - key: ALLOWED_ORIGINS
+        value: "https://yourfrontend.vercel.app"
+
+  # FolioX Redis for sessions
+  - type: redis
+    name: foliox-redis
+    ipAllowList: [] # All IPs
+    plan: free # Note: Render free Redis expires in 90 days.
