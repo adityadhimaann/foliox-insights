@@ -18,7 +18,7 @@ services:
           name: foliox-redis
           property: connectionString
       - key: ALLOWED_ORIGINS
-        value: "https://yourfrontend.vercel.app"
+        value: "https://foliox-insights.vercel.app"
 
   # FolioX Redis for sessions
   - type: redis
