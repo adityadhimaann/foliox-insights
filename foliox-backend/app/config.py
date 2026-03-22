@@ -1,11 +1,26 @@
 from pydantic_settings import BaseSettings
-from typing import List, Optional
+from typing import List, Optional, Union
+from pydantic import field_validator
+import json
 
 class Settings(BaseSettings):
     ANTHROPIC_API_KEY: str = ""
     ENVIRONMENT: str = "development"
     MAX_FILE_SIZE_MB: int = 10
     ALLOWED_ORIGINS: List[str] = ["*"]
+    
+    @field_validator("ALLOWED_ORIGINS", mode="before")
+    @classmethod
+    def assemble_origins(cls, v: Union[str, List[str]]) -> List[str]:
+        if isinstance(v, str) and not v.startswith("["):
+            return [i.strip() for i in v.split(",") if i.strip()]
+        elif isinstance(v, str) and v.startswith("["):
+            try:
+                return json.loads(v)
+            except:
+                return [v]
+        return v
+
     AMFI_CACHE_TTL_HOURS: int = 24
     SESSION_TTL_MINUTES: int = 30
     
