@@ -7,19 +7,22 @@ class Settings(BaseSettings):
     ANTHROPIC_API_KEY: str = ""
     ENVIRONMENT: str = "development"
     MAX_FILE_SIZE_MB: int = 10
-    ALLOWED_ORIGINS: List[str] = ["*"]
     
-    @field_validator("ALLOWED_ORIGINS", mode="before")
-    @classmethod
-    def assemble_origins(cls, v: Union[str, List[str]]) -> List[str]:
-        if isinstance(v, str) and not v.startswith("["):
-            return [i.strip() for i in v.split(",") if i.strip()]
-        elif isinstance(v, str) and v.startswith("["):
+    # Render-friendly origin parsing (handles comma-separated and JSON)
+    ALLOWED_ORIGINS: str = "*"
+    
+    @property
+    def cors_origins(self) -> List[str]:
+        """Convert the raw string into a clean list for CORSMiddleware."""
+        v = self.ALLOWED_ORIGINS.strip()
+        if not v or v == "*":
+            return ["*"]
+        if v.startswith("["):
             try:
-                return json.loads(v)
+                return [str(i) for i in json.loads(v)]
             except:
                 return [v]
-        return v
+        return [i.strip() for i in v.split(",") if i.strip()]
 
     AMFI_CACHE_TTL_HOURS: int = 24
     SESSION_TTL_MINUTES: int = 30
