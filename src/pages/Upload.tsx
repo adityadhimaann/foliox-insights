@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import UploadZone from '@/components/UploadZone';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2, Sparkles } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
 
 const Upload = () => {
@@ -13,10 +14,76 @@ const Upload = () => {
   const [name, setName] = useState('');
   const [language, setLanguage] = useState('en');
   const [loading, setLoading] = useState(false);
+  const { token } = useAuth();
 
   const handleAnalyze = async () => {
     if (!file || loading) return;
     setLoading(true);
+
+    if (file.name === 'CAMS_Mock_Statement_Aditya_Kumar.pdf') {
+      // Mock performance data for Demo
+      const mockAnalysis = {
+        session_id: "demo-session-aditya",
+        total_investment: 597000,
+        total_current_value: 1024255,
+        total_xirr: 0.1142,
+        health_score: { total_score: 84 },
+        benchmark: { benchmark_name: "Nifty 100", benchmark_xirr: 0.1120 },
+        funds: [
+          { fund_name: "SBI Small Cap Fund", xirr: 0.1814, category: "Small Cap", current_value: 136000, investment_value: 68000 },
+          { fund_name: "Parag Parikh Flexi Cap Fund", xirr: 0.1431, category: "Flexi Cap", current_value: 367000, investment_value: 170000 },
+          { fund_name: "HDFC Mid-Cap Opportunities Fund", xirr: 0.1372, category: "Mid Cap", current_value: 129000, investment_value: 76000 },
+          { fund_name: "Mirae Asset Large Cap Fund", xirr: 0.1120, category: "Large Cap", current_value: 303000, investment_value: 205000 },
+          { fund_name: "Axis Bluechip Fund", xirr: 0.0982, category: "Large Cap", current_value: 89255, investment_value: 78000 },
+        ],
+        overlap_matrix: [
+          { fund_a: "Mirae Asset Large Cap Fund", fund_b: "Axis Bluechip Fund", overlap_percentage: 0.65 },
+          { fund_a: "Mirae Asset Large Cap Fund", fund_b: "Parag Parikh Flexi Cap Fund", overlap_percentage: 0.25 },
+          { fund_a: "Mirae Asset Large Cap Fund", fund_b: "HDFC Mid-Cap Opportunities Fund", overlap_percentage: 0.10 },
+          { fund_a: "Axis Bluechip Fund", fund_b: "Parag Parikh Flexi Cap Fund", overlap_percentage: 0.20 },
+          { fund_a: "Axis Bluechip Fund", fund_b: "HDFC Mid-Cap Opportunities Fund", overlap_percentage: 0.05 },
+          { fund_a: "Parag Parikh Flexi Cap Fund", fund_b: "HDFC Mid-Cap Opportunities Fund", overlap_percentage: 0.30 },
+          { fund_a: "SBI Small Cap Fund", fund_b: "Mirae Asset Large Cap Fund", overlap_percentage: 0.02 },
+          { fund_a: "SBI Small Cap Fund", fund_b: "Parag Parikh Flexi Cap Fund", overlap_percentage: 0.05 },
+          { fund_a: "SBI Small Cap Fund", fund_b: "HDFC Mid-Cap Opportunities Fund", overlap_percentage: 0.03 },
+          { fund_a: "SBI Small Cap Fund", fund_b: "Axis Bluechip Fund", overlap_percentage: 0.01 }
+        ],
+        expense_drag: { 
+          weighted_avg_expense_ratio: 0.0172, 
+          category_avg_expense_ratio: 0.008,
+          ten_year_drag_rupees: 88000,
+          corpus_current_plan_10yr: 1800000,
+          corpus_if_direct_10yr: 1888000
+        },
+        ai_recommendations: [
+          { priority: 'high', action: 'Immediate action: Stop Axis Bluechip SIP & Redeem', detail: 'Axis Bluechip is your weakest performer (9.82%). It has ~65% overlap with Mirae Large Cap. The ₹11,251 gain is likely under the LTCG exemption limit — tax impact is minimal.', estimated_impact: 'Consolidate redundant Large Cap' },
+          { priority: 'high', action: 'Redeploy the proceeds to Parag Parikh Flexi Cap', detail: 'Route the Axis Bluechip money into Parag Parikh Flexi Cap — it\'s your best performer, most diversified, and genuinely unique in the portfolio.', estimated_impact: 'Increase Portfolio Alpha' },
+          { priority: 'medium', action: 'Longer-term: Switch to Direct Plans', detail: 'Consider Direct plans on platforms like MF Central. The ~₹10,000/year saving in expense ratios adds up to ₹1–2L extra over a decade through compounding.', estimated_impact: 'Save ₹10,000/year' },
+          { priority: 'low', action: 'Don\'t touch: SBI Small Cap and HDFC Mid-Cap', detail: 'SBI Small Cap and HDFC Mid-Cap are doing exactly what they should with minimal overlap. Leave them alone.', estimated_impact: 'Maintain Growth Engine' }
+        ],
+        timeline: [
+          { year: 2020, invested_amount: 100000, portfolio_value: 110000 },
+          { year: 2021, invested_amount: 220000, portfolio_value: 280000 },
+          { year: 2022, invested_amount: 350000, portfolio_value: 490000 },
+          { year: 2023, invested_amount: 480000, portfolio_value: 720000 },
+          { year: 2024, invested_amount: 597000, portfolio_value: 1024255 }
+        ]
+      };
+
+      localStorage.setItem('foliox_last_analysis', JSON.stringify(mockAnalysis));
+      
+      // Proactively log activity so Recents tab in sidebar gets populated
+      if (token) {
+        fetch('http://localhost:8000/api/user/log-activity', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ action: "analyzed_portfolio" })
+        }).catch(err => console.log("Silent log failure", err));
+      }
+      
+      navigate('/analyzing', { state: { sessionId: "demo-aditya", language, isDemo: true, analysis: mockAnalysis } });
+      return;
+    }
 
     const formData = new FormData();
     formData.append('file', file);

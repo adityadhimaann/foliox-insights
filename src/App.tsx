@@ -10,6 +10,7 @@ import Upload from "./pages/Upload";
 import Analyzing from "./pages/Analyzing";
 import Results from "./pages/Results";
 import Settings from "./pages/Settings";
+import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -21,6 +22,7 @@ const AnimatedRoutes = () => {
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Index />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/upload" element={<Upload />} />
         <Route path="/analyzing" element={<Analyzing />} />
         <Route path="/results" element={<Results />} />

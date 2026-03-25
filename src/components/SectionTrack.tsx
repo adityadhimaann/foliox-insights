@@ -11,7 +11,7 @@ const TRACK_ITEMS = [
 
 const SectionTrack = ({ activeId }: { activeId: string }) => {
   return (
-    <aside className="hidden xl:flex flex-col items-center py-12 w-[140px] sticky top-16 h-[calc(100vh-64px)] overflow-hidden border-r border-border/10 bg-background/5">
+    <aside className="hidden xl:flex flex-col items-center justify-center py-20 w-[140px] sticky top-16 h-[calc(100vh-64px)] overflow-hidden border-r border-border/10 bg-background/5">
       {/* Background Decorative Line (Dashed) */}
       <div className="absolute left-[34px] top-12 bottom-12 w-[2px] border-l-2 border-dashed border-border/30 z-0" />
       

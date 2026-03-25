@@ -25,11 +25,13 @@ const facts = [
 
 interface AnalyzingStepperProps {
   sessionId: string;
+  isDemo?: boolean;
+  mockData?: any;
   onComplete: (data: any) => void;
   onError: (error: string) => void;
 }
 
-const AnalyzingStepper = ({ sessionId, onComplete, onError }: AnalyzingStepperProps) => {
+const AnalyzingStepper = ({ sessionId, isDemo, mockData, onComplete, onError }: AnalyzingStepperProps) => {
   const [activeStep, setActiveStep] = useState(0);
   const [currentMessage, setCurrentMessage] = useState('Initializing analysis...');
   const [factIndex, setFactIndex] = useState(0);
@@ -37,6 +39,24 @@ const AnalyzingStepper = ({ sessionId, onComplete, onError }: AnalyzingStepperPr
 
   useEffect(() => {
     if (!sessionId) return;
+
+    if (isDemo) {
+      // Simulate progress for Demo
+      let current = 0;
+      const interval = setInterval(() => {
+        if (current < steps.length) {
+          const stepPercent = Math.round(((current + 1) / steps.length) * 100);
+          setActiveStep(current);
+          setProgressPercent(stepPercent);
+          setCurrentMessage(steps[current].label);
+          current++;
+        } else {
+          clearInterval(interval);
+          setTimeout(() => onComplete(mockData), 600);
+        }
+      }, 1000);
+      return () => clearInterval(interval);
+    }
 
     const eventSource = new EventSource(`http://localhost:8000/api/stream/${sessionId}`);
 

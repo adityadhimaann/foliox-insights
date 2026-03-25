@@ -336,3 +336,80 @@
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.1); }
 }
+
+/* Print Overrides */
+@media print {
+  @page {
+    margin: 1.5cm;
+    size: auto;
+  }
+  
+  html, body, #root, .page-bg, .flex, .flex-col, .h-screen, .flex-1, main {
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+    position: static !important;
+    max-height: none !important;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Style components for white paper */
+  .glass-card {
+    background: white !important;
+    color: #111 !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    margin-bottom: 2rem !important;
+    padding: 2rem !important;
+  }
+
+  /* Force charts to render correctly */
+  .recharts-responsive-container {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .page-bg::before, .page-bg::after, .noise-overlay, .print\:hidden {
+    display: none !important;
+  }
+
+  body, .page-bg {
+    background: white !important;
+    color: black !important;
+  }
+
+  .text-text-muted, .text-text-secondary {
+    color: #444 !important;
+  }
+
+  .text-primary {
+    color: #008a60 !important;
+    font-weight: bold !important;
+  }
+
+  .scroll-mt-4, .scroll-mt-20 {
+    scroll-margin-top: 0 !important;
+    margin-bottom: 3rem !important;
+    page-break-after: auto;
+  }
+
+  .card-section-header {
+    margin-bottom: 1.5rem !important;
+    font-size: 14px !important;
+    color: black !important;
+  }
+
+  /* Timeline Chart labels fix */
+  .recharts-text {
+    fill: #333 !important;
+  }
+}
+

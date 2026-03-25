@@ -43,3 +43,40 @@ async def download_report(session_id: str):
             "Cache-Control": "no-cache",
         }
     )
+
+from fastapi import Request
+
+@router.post("/report/generate-custom")
+async def generate_custom_report(request: Request):
+    """
+    Generate PDF from frontend-supplied JSON layout. Used for demo modes.
+    """
+    try:
+        analysis = await request.json()
+    except:
+        raise HTTPException(status_code=400, detail="Invalid JSON body")
+        
+    # Map frontend keys to what reportlab generator expects
+    analysis['total_invested'] = analysis.get('total_investment', 0)
+    for f in analysis.get('funds', []):
+        if 'investment_value' in f:
+            f['invested_amount'] = f['investment_value']
+            
+    try:
+        pdf_bytes = await generate_pdf_report(analysis)
+    except Exception as e:
+        log.error("custom_report_failed", error=str(e))
+        raise HTTPException(status_code=500, detail="Report generation failed")
+    
+    investor = analysis.get("investor_name") or "Aditya_Kumar"
+    filename = f"FolioX_{investor.replace(' ','_')}_Analysis.pdf"
+    
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename}"',
+            "Content-Length": str(len(pdf_bytes)),
+            "Access-Control-Expose-Headers": "Content-Disposition"
+        }
+    )

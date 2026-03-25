@@ -9,6 +9,7 @@ import OverlapHeatmap from '@/components/OverlapHeatmap';
 import ExpenseDragCard from '@/components/ExpenseDragCard';
 import RebalancingPlan from '@/components/RebalancingPlan';
 import TimelineChart from '@/components/TimelineChart';
+import Footer from '@/components/Footer';
 import { toast } from 'sonner';
 
 const Results = () => {
@@ -74,7 +75,7 @@ const Results = () => {
           <SectionTrack activeId={activeId} />
 
           {/* 3. Main content: Expanded Visual Data HUB */}
-          <main className="flex-1 p-6 md:p-12 space-y-20 overflow-y-auto no-scrollbar pb-40 w-full max-w-full">
+          <main className="flex-1 p-6 md:p-12 space-y-20 overflow-y-auto no-scrollbar pb-12 w-full max-w-full">
             <div id="expense" className="scroll-mt-4 w-full">
               <XirrChart benchmark={analysis.benchmark} funds={analysis.funds} />
             </div>
@@ -87,8 +88,12 @@ const Results = () => {
             <div id="rebalance" className="scroll-mt-4 w-full">
               <RebalancingPlan recommendations={analysis.ai_recommendations} />
             </div>
-            <div id="timeline" className="scroll-mt-4 w-full">
+            <div id="timeline" className="scroll-mt-20 w-full min-h-[400px]">
               <TimelineChart points={analysis.timeline} />
+            </div>
+            
+            <div className="pt-20 print:hidden">
+               <Footer />
             </div>
           </main>
         </div>

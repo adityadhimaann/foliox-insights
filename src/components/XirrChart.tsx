@@ -7,12 +7,12 @@ interface XirrChartProps {
 }
 
 const XirrChart = ({ benchmark, funds }: { benchmark: any; funds: any[] }) => {
-  const benchmarkXirr = Math.round(benchmark.benchmark_xirr * 1000) / 10;
+  const benchmarkXirr = Math.round(benchmark.benchmark_xirr * 10000) / 100;
   
   const chartData = funds.map(f => ({
     name: f.fund_name.split(' ').slice(0, 2).join(' '),
     fullName: f.fund_name,
-    xirr: Math.round(f.xirr * 1000) / 10
+    xirr: Math.round(f.xirr * 10000) / 100
   }));
 
   const CustomTooltip = ({ active, payload, label }: any) => {

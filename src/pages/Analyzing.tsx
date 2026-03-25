@@ -8,6 +8,8 @@ const Analyzing = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const sessionId = location.state?.sessionId;
+  const isDemo = location.state?.isDemo;
+  const mockData = location.state?.analysis;
 
   useEffect(() => {
     if (!sessionId) {
@@ -28,9 +30,11 @@ const Analyzing = () => {
     >
       <AnalyzingStepper 
         sessionId={sessionId}
+        isDemo={isDemo}
+        mockData={mockData}
         onComplete={(data) => {
-          localStorage.setItem('foliox_last_analysis', JSON.stringify(data));
-          navigate('/results', { state: { analysis: data } });
+          localStorage.setItem('foliox_last_analysis', JSON.stringify(data || mockData));
+          navigate('/results', { state: { analysis: data || mockData } });
         }} 
         onError={(err) => {
           toast.error(err);

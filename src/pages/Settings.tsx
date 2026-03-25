@@ -52,7 +52,7 @@ const Settings = () => {
       <Navbar />
 
       <main className="flex-1 max-w-5xl mx-auto w-full px-6 pt-10 pb-20 relative z-10">
-        <Link to="/" className="inline-flex items-center gap-1.5 text-text-muted font-body text-sm mb-8 hover:text-foreground transition-colors group">
+        <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-text-muted font-body text-sm mb-8 hover:text-foreground transition-colors group">
           <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" /> Back to Dashboard
         </Link>
 
