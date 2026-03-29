@@ -57,10 +57,21 @@ async def generate_custom_report(request: Request):
         raise HTTPException(status_code=400, detail="Invalid JSON body")
         
     # Map frontend keys to what reportlab generator expects
-    analysis['total_invested'] = analysis.get('total_investment', 0)
+    # Handle both real analysis results and mock demo data
+    if 'total_investment' in analysis and 'total_invested' not in analysis:
+        analysis['total_invested'] = analysis['total_investment']
+    
+    # Ensure other top-level metrics are present
+    analysis.setdefault('total_current_value', analysis.get('total_value', 0))
+    analysis.setdefault('total_xirr', analysis.get('portfolio_xirr', 0))
+    
     for f in analysis.get('funds', []):
-        if 'investment_value' in f:
+        if 'investment_value' in f and 'invested_amount' not in f:
             f['invested_amount'] = f['investment_value']
+        # Ensure xirr and current_value are present for the generator
+        f.setdefault('xirr', 0.0)
+        f.setdefault('current_value', 0.0)
+        f.setdefault('invested_amount', 0.0)
             
     try:
         pdf_bytes = await generate_pdf_report(analysis)

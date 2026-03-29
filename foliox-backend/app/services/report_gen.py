@@ -100,7 +100,7 @@ async def generate_pdf_report(analysis: dict) -> bytes:
         _p(f"Current Value\nRs. {analysis.get('total_current_value',0):,.0f}",
            _sty("BS3", fontSize=10, fontName="Helvetica-Bold",
                 textColor=WHITE, alignment=TA_CENTER, leading=15)),
-        _p(f"Portfolio XIRR\n{analysis.get('total_xirr',0)*100:.1f}% p.a.",
+        _p(f"Portfolio XIRR\n{(analysis.get('total_xirr') or 0)*100:.1f}% p.a.",
            _sty("BS4", fontSize=10, fontName="Helvetica-Bold",
                 textColor=colors.HexColor("#AAFFCC"), alignment=TA_CENTER, leading=15)),
     ]]
@@ -167,11 +167,12 @@ async def generate_pdf_report(analysis: dict) -> bytes:
         _p("XIRR%", S_BOLD),
     ]]
     for f in funds[:12]: # Cap at 12 for page space
+        xirr_val = f.get("xirr") or 0.0
         fund_rows.append([
-            _p(f["fund_name"][:40], S_BODY),
-            _p(f"Rs. {f['invested_amount']:,.0f}", S_R),
-            _p(f"Rs. {f['current_value']:,.0f}", S_R),
-            _p(f"{f['xirr']*100:.1f}%", S_G if f["xirr"] > 0 else S_O),
+            _p(f.get("fund_name", "Unknown")[:40], S_BODY),
+            _p(f"Rs. {f.get('invested_amount', 0):,.0f}", S_R),
+            _p(f"Rs. {f.get('current_value', 0):,.0f}", S_R),
+            _p(f"{xirr_val*100:.1f}%", S_G if xirr_val > 0 else S_O),
         ])
     
     fund_tbl = Table(fund_rows, colWidths=[90*mm, 30*mm, 30*mm, 24*mm])

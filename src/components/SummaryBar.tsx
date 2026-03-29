@@ -57,8 +57,11 @@ const SummaryBar = ({ analysis }: SummaryBarProps) => {
   const handleDownload = async () => {
     const toastId = toast.loading("Generating your comprehensive portfolio report...");
     
+    // Robustly handle backend URL (could be 8000, 8001, 8008 etc. in dev)
+    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+    
     try {
-      const response = await fetch('http://localhost:8000/api/report/generate-custom', {
+      const response = await fetch(`${API_BASE}/api/report/generate-custom`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(analysis)
@@ -132,22 +135,29 @@ const SummaryBar = ({ analysis }: SummaryBarProps) => {
         <div className="flex gap-2 md:gap-4 flex-wrap">
           <div className="px-4 py-1.5 rounded-lg border border-border/40 bg-foreground/5 flex flex-col items-start min-w-[120px]">
              <p className="font-body text-[10px] text-text-muted mb-0.5">Total invested</p>
-             <p className="font-mono text-base md:text-xl font-bold text-foreground">₹5,97,000</p>
-             <p className="font-body text-[10px] text-text-muted mt-0.5">6 years</p>
+             <p className="font-mono text-base md:text-xl font-bold text-foreground">{formatCurrency(analysis.total_investment || analysis.total_invested)}</p>
+             <p className="font-body text-[10px] text-text-muted mt-0.5">Portfolio Life</p>
           </div>
           <div className="px-4 py-1.5 rounded-lg border border-border/40 bg-foreground/5 flex flex-col items-start min-w-[120px]">
              <p className="font-body text-[10px] text-text-muted mb-0.5">Current value</p>
-             <p className="font-mono text-base md:text-xl font-bold text-foreground">₹10,24,255</p>
-             <p className="font-body text-[10px] text-text-muted mt-0.5">as of 31 Mar 2026</p>
+             <p className="font-mono text-base md:text-xl font-bold text-foreground">{formatCurrency(analysis.total_current_value)}</p>
+             <p className="font-body text-[10px] text-text-muted mt-0.5">as of {analysis.analysis_timestamp || 'today'}</p>
           </div>
           <div className="px-4 py-1.5 rounded-lg border border-border/40 bg-foreground/5 flex flex-col items-start min-w-[120px] bg-primary/10 border-primary/20">
              <p className="font-body text-[10px] text-text-muted mb-0.5">Total gain</p>
-             <p className="font-mono text-base md:text-xl font-bold text-primary">+₹4,27,255</p>
-             <p className="font-body text-[10px] text-primary/80 mt-0.5">+71.6% absolute</p>
+             <p className="font-mono text-base md:text-xl font-bold text-primary">
+                {analysis.total_current_value - (analysis.total_investment || analysis.total_invested) >= 0 ? '+' : ''}
+                {formatCurrency(analysis.total_current_value - (analysis.total_investment || analysis.total_invested))}
+             </p>
+             <p className="font-body text-[10px] text-primary/80 mt-0.5">
+                {(((analysis.total_current_value / (analysis.total_investment || analysis.total_invested)) - 1) * 100).toFixed(1)}% absolute
+             </p>
           </div>
           <div className="px-4 py-1.5 rounded-lg border border-border/40 bg-foreground/5 flex flex-col items-start min-w-[120px]">
              <p className="font-body text-[10px] text-text-muted mb-0.5">Portfolio XIRR</p>
-             <p className="font-mono text-base md:text-xl font-bold text-primary">11.42%</p>
+             <p className="font-mono text-base md:text-xl font-bold text-primary">
+                {(analysis.total_xirr * 100).toFixed(2)}%
+             </p>
              <p className="font-body text-[10px] text-text-muted mt-0.5">per annum</p>
           </div>
         </div>
