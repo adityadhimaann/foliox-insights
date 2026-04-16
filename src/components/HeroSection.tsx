@@ -162,11 +162,11 @@ const DeviceMockups = () => {
 
 const MobileMockupOnly = () => {
   return (
-    <div className="lg:hidden absolute bottom-[-5%] right-[-5%] w-[200px] aspect-[9/19.5] z-0 opacity-30 blur-[0.5px]">
+    <div className="lg:hidden absolute top-[20%] right-[-10%] w-[180px] aspect-[9/19.5] z-0 opacity-20 blur-[1px] pointer-events-none">
       <motion.div
         initial={{ opacity: 0, x: 50, rotate: 5 }}
-        animate={{ opacity: 1, x: 0, rotate: -15 }}
-        transition={{ duration: 1, delay: 0.8 }}
+        animate={{ opacity: 1, x: 0, rotate: -25 }}
+        transition={{ duration: 1.2, delay: 0.8 }}
         className="w-full h-full rounded-[40px] border-[6px] border-[#6a6a70] bg-[#6a6a70] overflow-hidden shadow-2xl"
         style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}
       >
@@ -463,20 +463,20 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative overflow-hidden flex flex-col justify-center min-h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:h-auto">
+    <section className="relative overflow-hidden flex flex-col min-h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:h-auto">
       {/* Mobile-only background elements to fill space */}
       <div className="lg:hidden absolute bottom-0 left-1/2 -translate-x-1/2 w-[150%] h-[30%] bg-primary/10 blur-[100px] rounded-full pointer-events-none z-0" />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-24 md:py-[120px] relative w-full flex flex-col justify-center">
-        <div className="max-w-[640px] relative z-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-24 md:py-[120px] relative w-full flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col justify-center items-center sm:items-start text-center sm:text-left relative z-20">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="text-primary text-[13px] font-body tracking-[0.08em] uppercase mb-6"
+            className="text-primary text-[11px] sm:text-[13px] font-body tracking-[0.1em] uppercase mb-4 sm:mb-6 flex items-center gap-1"
           >
             Strong AGENTIC AI · Free · Takes 10 seconds
-            <span className="inline-block w-[2px] h-4 bg-primary ml-1 align-middle" style={{ animation: 'typing-dots 1s step-end infinite' }} />
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
           </motion.p>
 
           <div className="mb-4 sm:mb-6">
@@ -499,7 +499,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.4 }}
-            className="font-body text-[15px] sm:text-lg md:text-xl text-text-secondary leading-relaxed mb-6 sm:mb-10 max-w-[500px]"
+            className="font-body text-[14px] sm:text-lg md:text-xl text-text-secondary leading-relaxed mb-6 sm:mb-10 max-w-[500px]"
           >
             Upload your CAS statement. Get Portfolio Health, true XIRR, fund overlap, and an AI rebalancing plan — in seconds.
           </motion.p>
@@ -508,11 +508,11 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.5 }}
-            className="flex flex-col items-start gap-3"
+            className="flex flex-col items-center sm:items-start gap-3"
           >
             <button
               onClick={() => navigate('/upload')}
-              className="cta-pulse h-12 sm:h-14 px-6 sm:px-8 rounded-[14px] text-primary-foreground font-body text-[15px] sm:text-[17px] font-medium transition-all duration-150 hover:brightness-110 group"
+              className="cta-pulse h-12 sm:h-14 px-8 sm:px-8 rounded-[14px] text-primary-foreground font-body text-[15px] sm:text-[17px] font-medium transition-all duration-150 hover:brightness-110 group"
               style={{
                 background: 'linear-gradient(135deg, #00E5A0, #00C48C)',
                 boxShadow: '0 4px 20px rgba(0,229,160,0.35)',
@@ -521,7 +521,7 @@ const HeroSection = () => {
               Upload Your Statement
               <span className="inline-block ml-2 transition-transform duration-150 group-hover:translate-x-1">→</span>
             </button>
-            <span className="text-text-muted text-[13px] font-body">
+            <span className="text-text-muted text-[12px] sm:text-[13px] font-body">
               PDF only · Your data never leaves your session
             </span>
           </motion.div>
@@ -531,11 +531,11 @@ const HeroSection = () => {
         <DeviceMockups />
 
         {/* Mobile stat pills — grid so all 3 fit without scrolling */}
-        <div className="lg:hidden grid grid-cols-3 gap-3 mt-10 sm:mt-12">
+        <div className="lg:hidden grid grid-cols-3 gap-2 mt-8 sm:mt-12 pb-6">
           {[
-            { number: '14 Cr+', label: 'Holders', Icon: Users },
+            { number: '14 Cr+', label: 'Demat Holders in India', Icon: Users },
             { number: '₹0', label: 'Completely Free', Icon: BadgeDollarSign },
-            { number: '10 Sec', label: 'Analysis', Icon: Timer },
+            { number: '10 Sec', label: 'Instant Analysis', Icon: Timer },
           ].map((stat, i) => (
             <motion.div 
               key={stat.label}
@@ -563,12 +563,6 @@ const HeroSection = () => {
           animate={{ opacity: 0.4 }}
           transition={{ delay: 2 }}
         >
-          <span className="font-mono text-[9px] uppercase tracking-[0.2em]">Explore</span>
-          <motion.div 
-            className="w-[1px] h-8 bg-gradient-to-b from-primary to-transparent"
-            animate={{ height: [0, 32, 0], opacity: [0, 1, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
         </motion.div>
       </div>
     </section>
