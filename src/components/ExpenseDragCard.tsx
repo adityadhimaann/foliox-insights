@@ -18,28 +18,28 @@ const ExpenseDragCard = ({ drag }: ExpenseDragProps) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.4, delay: 0.16 }}
-    className="glass-card p-6"
+    className="glass-card p-4 sm:p-6"
   >
     <h3 className="card-section-header mb-6">EXPENSE ANALYSIS</h3>
 
-    <div className="grid md:grid-cols-2 gap-8 mb-8 ml-[18px]">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mb-6 sm:mb-8 ml-0 sm:ml-[18px]">
       <div>
         <p className="font-body text-sm text-text-secondary mb-2">Weighted Avg. Expense Ratio</p>
-        <p className="font-mono text-4xl text-accent-warn font-medium" style={{ textShadow: '0 0 30px rgba(255,107,53,0.4)' }}>
+        <p className="font-mono text-2xl sm:text-4xl text-accent-warn font-medium" style={{ textShadow: '0 0 30px rgba(255,107,53,0.4)' }}>
           {(drag.weighted_avg_expense_ratio * 100).toFixed(2)}%
         </p>
         <p className="font-body text-[13px] text-text-muted mt-1">Direct plan benchmark is {(drag.category_avg_expense_ratio * 100).toFixed(1)}%</p>
       </div>
       <div>
         <p className="font-body text-sm text-text-secondary mb-2">10-Year Expense Drag</p>
-        <p className="font-mono text-4xl text-accent-warn font-medium" style={{ textShadow: '0 0 30px rgba(255,107,53,0.4)' }}>
+        <p className="font-mono text-2xl sm:text-4xl text-accent-warn font-medium" style={{ textShadow: '0 0 30px rgba(255,107,53,0.4)' }}>
           {formatCurrency(drag.ten_year_drag_rupees)}
         </p>
         <p className="font-body text-[13px] text-text-muted mt-1">The potential loss to distribution fees</p>
       </div>
     </div>
 
-    <div className="ml-[18px]">
+    <div className="ml-0 sm:ml-[18px]">
       <p className="font-body text-sm text-text-secondary mb-4">Real vs Ideal Portfolio growth (10-year projection)</p>
       <div className="space-y-4">
         <div>

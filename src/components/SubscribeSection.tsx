@@ -34,7 +34,7 @@ const SubscribeSection = () => {
   ];
 
   return (
-    <section className="pt-16 pb-16 px-6 md:px-10 relative overflow-hidden bg-background">
+    <section className="pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 sm:px-6 md:px-10 relative overflow-hidden bg-background">
       {/* Background radial accents */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
@@ -80,16 +80,16 @@ const SubscribeSection = () => {
                 className="w-full max-w-md relative group px-1"
                 onSubmit={(e) => e.preventDefault()}
               >
-                <div className="relative">
+                <div className="relative flex flex-col sm:flex-row gap-2">
                   <input 
                     type="email" 
                     placeholder="Enter your email" 
-                    className="w-full h-14 pl-5 pr-36 rounded-2xl bg-foreground/5 border border-border focus:border-primary/40 focus:ring-4 focus:ring-primary/5 outline-none transition-all duration-300 font-body text-foreground"
+                    className="w-full h-14 pl-5 pr-5 sm:pr-36 rounded-2xl bg-foreground/5 border border-border focus:border-primary/40 focus:ring-4 focus:ring-primary/5 outline-none transition-all duration-300 font-body text-foreground"
                     required
                   />
                   <button 
                     type="submit"
-                    className="absolute right-1.5 top-1.5 h-11 px-6 rounded-xl bg-primary text-primary-foreground font-heading font-bold text-sm flex items-center gap-2 transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-lg shadow-primary/20"
+                    className="sm:absolute sm:right-1.5 sm:top-1.5 h-11 px-6 rounded-xl bg-primary text-primary-foreground font-heading font-bold text-sm flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] active:scale-95 shadow-lg shadow-primary/20 w-full sm:w-auto"
                   >
                     Join <Send className="w-3.5 h-3.5" />
                   </button>
@@ -135,7 +135,7 @@ const SubscribeSection = () => {
         </div>
 
         {/* Final Connect & Branding Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between pt-12 border-t border-border/40 gap-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between pt-10 sm:pt-12 border-t border-border/40 gap-6 sm:gap-8">
            <div className="flex items-center gap-3">
               <span className="font-heading text-2xl tracking-tight">
                 <span className="text-foreground">Folio</span>

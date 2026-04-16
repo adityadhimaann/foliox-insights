@@ -38,7 +38,7 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="pt-0 pb-24 px-6 md:px-10 relative overflow-hidden bg-background">
+    <section className="pt-0 pb-16 sm:pb-24 px-4 sm:px-6 md:px-10 relative overflow-hidden bg-background">
       {/* Subtle background accents */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />

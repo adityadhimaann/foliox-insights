@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar';
 import { ArrowLeft, Loader2, Sparkles } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
+import { API_BASE } from '@/lib/api';
 
 const Upload = () => {
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ const Upload = () => {
       
       // Proactively log activity so Recents tab in sidebar gets populated
       if (token) {
-        fetch('http://localhost:8000/api/user/log-activity', {
+        fetch(`${API_BASE}/api/user/log-activity`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
           body: JSON.stringify({ action: "analyzed_portfolio" })
@@ -91,7 +92,7 @@ const Upload = () => {
     formData.append('language', language);
 
     try {
-      const response = await fetch('http://localhost:8000/api/upload', {
+      const response = await fetch(`${API_BASE}/api/upload`, {
         method: 'POST',
         body: formData,
       });
@@ -134,7 +135,7 @@ const Upload = () => {
 
         <UploadZone onFileSelected={setFile} />
 
-        <div className="grid grid-cols-2 gap-4 mt-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
           <div>
             <label className="font-body text-sm text-text-secondary mb-1.5 block">Your Name (optional)</label>
             <input

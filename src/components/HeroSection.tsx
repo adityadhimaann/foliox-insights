@@ -1,7 +1,43 @@
 import { motion, useInView } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Users, BadgeDollarSign, Timer, TrendingUp } from 'lucide-react';
+
+/** Lazy-loaded video: defers download until element is in viewport */
+const LazyVideo = ({ src, poster, className }: { src: string; poster?: string; className?: string }) => {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src={isVisible ? src : undefined}
+      poster={poster}
+      autoPlay={isVisible}
+      loop
+      muted
+      playsInline
+      preload="none"
+      className={className}
+    />
+  );
+};
 
 const words = "Know Exactly How Your Mutual Funds Are Performing".split(" ");
 
@@ -34,12 +70,9 @@ const DeviceMockups = () => {
 
             {/* Screen content */}
             <div className="relative w-full aspect-[16/9] overflow-hidden rounded-t-[6px] bg-black">
-              <video 
+              <LazyVideo 
                 src="/dekstop.mp4" 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
+                poster="/dashboard-poster.png"
                 className="w-full h-full object-cover select-none"
               />
               {/* Subtle screen glare */}
@@ -116,12 +149,8 @@ const DeviceMockups = () => {
           <div className="w-full h-full overflow-hidden rounded-[23px] bg-black relative">
             {/* Dynamic Island */}
             <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-[14px] bg-black rounded-[8px] z-10" />
-            <video 
+            <LazyVideo 
               src="/mobile.mp4" 
-              autoPlay 
-              loop 
-              muted 
-              playsInline 
               className="w-full h-full object-cover select-none"
             />
           </div>
@@ -140,7 +169,7 @@ const AnimatedCounter = ({ value, suffix = '' }: { value: string; suffix?: strin
       initial={{ opacity: 0, y: 10 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5 }}
-      className="font-mono text-[28px] md:text-[32px] text-primary font-medium"
+      className="font-mono text-[20px] sm:text-[28px] md:text-[32px] text-primary font-medium"
       style={{ textShadow: '0 0 20px rgba(0,229,160,0.3)' }}
     >
       {value}{suffix}
@@ -413,8 +442,8 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative overflow-hidden" style={{ minHeight: '90vh' }}>
-      <div className="max-w-7xl mx-auto px-6 py-24 md:py-[120px] relative">
+    <section className="relative overflow-hidden" style={{ minHeight: '80vh' }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 md:py-[120px] relative">
         <div className="max-w-[640px] relative z-20">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
@@ -427,7 +456,7 @@ const HeroSection = () => {
           </motion.p>
 
           <div className="mb-6">
-            <h1 className="font-heading text-[40px] md:text-[60px] lg:text-[64px] text-foreground leading-[1.15]">
+            <h1 className="font-heading text-[32px] sm:text-[40px] md:text-[60px] lg:text-[64px] text-foreground leading-[1.15]">
               {words.map((word, i) => (
                 <motion.span
                   key={i}
@@ -446,7 +475,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.4 }}
-            className="font-body text-lg md:text-xl text-text-secondary leading-relaxed mb-10"
+            className="font-body text-base sm:text-lg md:text-xl text-text-secondary leading-relaxed mb-8 sm:mb-10"
           >
             Upload your CAMS or KFintech statement. Get your Portfolio Health Score, true XIRR, fund overlap analysis, and a plain-English rebalancing plan — in under 10 seconds.
           </motion.p>
@@ -459,7 +488,7 @@ const HeroSection = () => {
           >
             <button
               onClick={() => navigate('/upload')}
-              className="cta-pulse h-14 px-8 rounded-[14px] text-primary-foreground font-body text-[17px] font-medium transition-all duration-150 hover:brightness-110 group"
+              className="cta-pulse h-12 sm:h-14 px-6 sm:px-8 rounded-[14px] text-primary-foreground font-body text-[15px] sm:text-[17px] font-medium transition-all duration-150 hover:brightness-110 group"
               style={{
                 background: 'linear-gradient(135deg, #00E5A0, #00C48C)',
                 boxShadow: '0 4px 20px rgba(0,229,160,0.35)',
@@ -476,17 +505,17 @@ const HeroSection = () => {
 
         <DeviceMockups />
 
-        {/* Mobile stat pills */}
-        <div className="lg:hidden flex overflow-x-auto gap-3 mt-10 pb-2 -mx-2 px-2 snap-x snap-mandatory">
+        {/* Mobile stat pills — grid so all 3 fit without scrolling */}
+        <div className="lg:hidden grid grid-cols-3 gap-2 sm:gap-3 mt-8 sm:mt-10">
           {[
             { number: '14 Cr+', label: 'Demat Holders', Icon: Users },
-            { number: '₹0', label: 'Cost', Icon: BadgeDollarSign },
-            { number: '10 Sec', label: 'Analysis', Icon: Timer },
+            { number: '₹0', label: 'Completely Free', Icon: BadgeDollarSign },
+            { number: '10 Sec', label: 'Instant Analysis', Icon: Timer },
           ].map(stat => (
-            <div key={stat.label} className="flex-shrink-0 snap-center px-5 py-4 text-center min-w-[130px] rounded-2xl bg-foreground/[0.03] border border-border/50 backdrop-blur-sm">
-              <stat.Icon className="w-5 h-5 text-primary mx-auto mb-1" />
+            <div key={stat.label} className="px-2 py-3 sm:px-5 sm:py-4 text-center rounded-2xl bg-foreground/[0.03] border border-border/50 backdrop-blur-sm">
+              <stat.Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary mx-auto mb-1" />
               <AnimatedCounter value={stat.number} />
-              <p className="font-body text-[11px] text-text-muted mt-1">{stat.label}</p>
+              <p className="font-body text-[10px] sm:text-[11px] text-text-muted mt-1 leading-tight">{stat.label}</p>
             </div>
           ))}
         </div>

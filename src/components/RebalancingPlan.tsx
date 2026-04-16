@@ -23,7 +23,7 @@ const RebalancingPlan = ({ recommendations }: RebalancingPlanProps) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.4, delay: 0.24 }}
-    className="relative rounded-[20px] p-6 overflow-hidden glass-card border-primary/20"
+    className="relative rounded-[20px] p-4 sm:p-6 overflow-hidden glass-card border-primary/20"
     style={{
       background: 'linear-gradient(180deg, rgba(0,229,160,0.1), transparent 100%), var(--bg-card)',
       backdropFilter: 'blur(20px)',
@@ -39,7 +39,7 @@ const RebalancingPlan = ({ recommendations }: RebalancingPlanProps) => (
 
     <h3 className="card-section-header mb-6">AI ACTION PLAN</h3>
 
-    <div className="space-y-4 ml-[18px]">
+    <div className="space-y-3 sm:space-y-4 ml-0 sm:ml-[18px]">
       {recommendations.map((rec, i) => (
         <motion.div
           key={i}
@@ -73,7 +73,7 @@ const RebalancingPlan = ({ recommendations }: RebalancingPlanProps) => (
       ))}
     </div>
 
-    <div className="mt-8 pt-4 border-t border-border/40 ml-[18px]">
+    <div className="mt-6 sm:mt-8 pt-4 border-t border-border/40 ml-0 sm:ml-[18px]">
       <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-[11px] font-body text-primary border border-primary/15 bg-primary/10"
       >
         ✦ Optimized by FolioX Agentic AI · Results may vary based on market conditions

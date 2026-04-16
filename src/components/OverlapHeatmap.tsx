@@ -52,14 +52,14 @@ const OverlapHeatmap = ({ matrix, funds }: OverlapHeatmapProps) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, delay: 0.08 }}
-      className="glass-card p-6 md:p-8"
+      className="glass-card p-4 sm:p-6 md:p-8"
     >
       <p className="font-body text-sm text-text-secondary leading-relaxed mb-6">
         High overlap means your money is effectively concentrated in fewer real positions than you think. The two large-cap funds share the most holdings.
       </p>
 
-      <div className="overflow-x-auto mb-8">
-        <table className="w-full">
+      <div className="overflow-x-auto mb-6 sm:mb-8 -mx-2 px-2">
+        <table className="w-full" style={{ minWidth: '500px' }}>
           <thead>
             <tr>
               <th className="p-2" />
@@ -99,9 +99,9 @@ const OverlapHeatmap = ({ matrix, funds }: OverlapHeatmapProps) => {
         </p>
       </div>
 
-      <div className="mt-10 pt-8 border-t border-border/40">
-        <p className="font-body text-[13px] text-text-secondary uppercase tracking-widest mb-8">Portfolio allocation — current value</p>
-        <div className="flex flex-col md:flex-row items-center justify-center md:items-start gap-12">
+      <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-border/40">
+        <p className="font-body text-[12px] sm:text-[13px] text-text-secondary uppercase tracking-widest mb-6 sm:mb-8">Portfolio allocation — current value</p>
+        <div className="flex flex-col items-center justify-center gap-8 sm:gap-12 md:flex-row md:items-start">
           
           <div className="grid grid-cols-2 gap-x-8 gap-y-6 w-full max-w-sm">
              <div className="flex items-start gap-2">
@@ -126,7 +126,7 @@ const OverlapHeatmap = ({ matrix, funds }: OverlapHeatmapProps) => {
              </div>
           </div>
 
-          <div className="relative w-full max-w-[220px] aspect-square flex-shrink-0">
+          <div className="relative w-full max-w-[180px] sm:max-w-[220px] aspect-square flex-shrink-0">
              <div className="absolute inset-0 rounded-full" style={{
                 background: `conic-gradient(
                   #3B82F6 0% 29.6%,

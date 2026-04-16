@@ -3,6 +3,7 @@ import { Mail, Lock, ArrowRight, Github, X, User, CheckCircle2, TrendingUp, Shie
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
+import { API_BASE } from '@/lib/api';
 
 const GoogleIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,7 +48,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
     const endpoint = isLogin ? '/api/auth/login' : '/api/auth/signup';
     
     try {
-      const response = await fetch(`http://localhost:8000${endpoint}`, {
+      const response = await fetch(`${API_BASE}${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +83,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 pointer-events-none">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 md:p-10 pointer-events-none">
           {/* Backdrop */}
           <motion.div 
             initial={{ opacity: 0 }}
@@ -98,7 +99,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 10 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full max-w-[960px] relative z-10 glass-card p-0 flex flex-col md:flex-row shadow-2xl overflow-hidden border-white/20 pointer-events-auto min-h-[600px]"
+            className="w-full max-w-[960px] relative z-10 glass-card p-0 flex flex-col md:flex-row shadow-2xl overflow-hidden border-white/20 pointer-events-auto max-h-[95vh] md:min-h-[600px] overflow-y-auto md:overflow-y-visible"
             style={{ 
                background: 'rgba(255, 255, 255, 0.85)',
                boxShadow: '0 40px 100px -20px rgba(0, 0, 0, 0.2)'
@@ -107,7 +108,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
             {/* Close Button UI */}
             <button 
                onClick={onClose}
-               className="flex absolute top-6 right-6 p-2 rounded-full bg-foreground/5 hover:bg-foreground/10 text-text-muted transition-colors z-[110]"
+                className="flex absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-foreground/5 hover:bg-foreground/10 text-text-muted transition-colors z-[110]"
             >
                <X className="w-5 h-5" />
             </button>
@@ -117,7 +118,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
                initial={{ x: 200, opacity: 0 }}
                animate={{ x: 0, opacity: 1 }}
                transition={{ duration: 0.6, delay: 0.2, ease: "circOut" }}
-               className="w-full md:w-[480px] p-8 md:p-16 relative bg-background/40"
+               className="w-full md:w-[480px] p-6 sm:p-8 md:p-16 relative bg-background/40"
             >
                {/* Branding */}
                <div className="flex items-center gap-2 mb-10">

@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import { User, Mail, History, Shield, LogOut, ChevronRight, Clock, ArrowLeft } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { API_BASE } from '@/lib/api';
 
 const Settings = () => {
   const { user, token, logout } = useAuth();
@@ -21,7 +22,7 @@ const Settings = () => {
 
     const fetchHistory = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/user/history', {
+        const response = await fetch(`${API_BASE}/api/user/history`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -51,7 +52,7 @@ const Settings = () => {
       <div className="noise-overlay" />
       <Navbar />
 
-      <main className="flex-1 max-w-5xl mx-auto w-full px-6 pt-10 pb-20 relative z-10">
+      <main className="flex-1 max-w-5xl mx-auto w-full px-4 sm:px-6 pt-8 sm:pt-10 pb-16 sm:pb-20 relative z-10">
         <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-text-muted font-body text-sm mb-8 hover:text-foreground transition-colors group">
           <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" /> Back to Dashboard
         </Link>
@@ -91,7 +92,7 @@ const Settings = () => {
                 <h3 className="font-heading text-xl text-foreground">Account Information</h3>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2">
                 <div>
                   <label className="font-body text-[13px] text-text-muted mb-1.5 block">Display Name</label>
                   <div className="flex items-center gap-3 p-3 rounded-lg bg-foreground/5 border border-border/40">

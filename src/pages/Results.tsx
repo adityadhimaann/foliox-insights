@@ -9,6 +9,7 @@ import OverlapHeatmap from '@/components/OverlapHeatmap';
 import ExpenseDragCard from '@/components/ExpenseDragCard';
 import RebalancingPlan from '@/components/RebalancingPlan';
 import TimelineChart from '@/components/TimelineChart';
+import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { toast } from 'sonner';
 
@@ -56,7 +57,7 @@ const Results = () => {
 
   return (
     <motion.div
-      className="page-bg flex h-screen overflow-hidden"
+      className="page-bg flex flex-col lg:flex-row h-screen overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -64,18 +65,23 @@ const Results = () => {
     >
       <div className="noise-overlay" />
 
-      {/* 1. Far Left: Global Command Sidebar (Collapsible Icons) */}
+      {/* Sidebar — desktop only */}
       <MainSidebar />
 
       <div className="flex-1 flex flex-col min-w-0 relative z-10 overflow-hidden bg-background/20 backdrop-blur-sm w-full">
+        {/* Mobile navbar */}
+        <div className="lg:hidden">
+          <Navbar />
+        </div>
+        
         <SummaryBar analysis={analysis} />
 
         <div className="flex-1 flex relative z-2 overflow-hidden w-full">
-          {/* 2. Middle-Left: Section Progress Track (Wayfinding Spine) */}
+          {/* SectionTrack — xl only */}
           <SectionTrack activeId={activeId} />
 
-          {/* 3. Main content: Expanded Visual Data HUB */}
-          <main className="flex-1 p-6 md:p-12 space-y-20 overflow-y-auto no-scrollbar pb-12 w-full max-w-full">
+          {/* Main content */}
+          <main className="flex-1 p-4 sm:p-6 md:p-12 space-y-12 sm:space-y-20 overflow-y-auto no-scrollbar pb-12 w-full max-w-full">
             <div id="expense" className="scroll-mt-4 w-full">
               <XirrChart benchmark={analysis.benchmark} funds={analysis.funds} />
             </div>
@@ -88,11 +94,11 @@ const Results = () => {
             <div id="rebalance" className="scroll-mt-4 w-full">
               <RebalancingPlan recommendations={analysis.ai_recommendations} />
             </div>
-            <div id="timeline" className="scroll-mt-20 w-full min-h-[400px]">
+            <div id="timeline" className="scroll-mt-20 w-full min-h-[300px] sm:min-h-[400px]">
               <TimelineChart points={analysis.timeline} />
             </div>
             
-            <div className="pt-20 print:hidden">
+            <div className="pt-12 sm:pt-20 print:hidden">
                <Footer />
             </div>
           </main>

@@ -33,12 +33,12 @@ const HowItWorks = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="how-it-works" className="py-32 relative overflow-hidden bg-background">
+    <section id="how-it-works" className="py-16 sm:py-32 relative overflow-hidden bg-background">
       {/* Technical Grid Overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1.5px,transparent_1.5px)] [background-size:32px_32px] opacity-[0.4] pointer-events-none" />
       
-      <div className="max-w-7xl mx-auto px-6 md:px-10 relative z-10">
-        <div className="flex flex-col items-center text-center mb-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-10 relative z-10">
+        <div className="flex flex-col items-center text-center mb-12 sm:mb-24">
           <motion.div
              initial={{ opacity: 0, y: 10 }}
              whileInView={{ opacity: 1, y: 0 }}
@@ -48,7 +48,7 @@ const HowItWorks = () => {
             The Protocol
           </motion.div>
           
-          <h2 className="font-heading text-5xl md:text-6xl text-foreground tracking-tight mb-8">
+          <h2 className="font-heading text-3xl sm:text-5xl md:text-6xl text-foreground tracking-tight mb-6 sm:mb-8">
             From data to <span className="text-primary italic">intelligence</span>
           </h2>
           

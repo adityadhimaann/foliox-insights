@@ -112,7 +112,7 @@ const FAQItem = ({ q, a, index }: { q: string; a: string; index: number }) => {
 
 const TrustAndFAQ = () => {
   return (
-    <section className="py-24 px-6 md:px-10 relative overflow-hidden bg-background">
+    <section className="py-16 sm:py-24 px-4 sm:px-6 md:px-10 relative overflow-hidden bg-background">
       {/* Background */}
       <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.3] pointer-events-none" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border/60 to-transparent" />
@@ -205,7 +205,7 @@ const TrustAndFAQ = () => {
           </div>
 
           {/* Right: FAQ Items */}
-          <div className="rounded-[24px] bg-foreground/[0.02] border border-border/40 p-8 md:p-10">
+          <div className="rounded-[20px] sm:rounded-[24px] bg-foreground/[0.02] border border-border/40 p-5 sm:p-8 md:p-10">
             {faqs.map((faq, i) => (
               <FAQItem key={faq.q} q={faq.q} a={faq.a} index={i} />
             ))}

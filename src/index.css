@@ -153,6 +153,15 @@
   .font-heading { font-family: var(--font-heading); }
   .font-body { font-family: var(--font-body); }
   .font-mono { font-family: var(--font-mono); }
+  
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+/* Mobile viewport height fix (accounts for browser chrome) */
+@supports (height: 100dvh) {
+  .h-screen { height: 100dvh; }
+  .min-h-screen { min-height: 100dvh; }
 }
 
 /* Background system */

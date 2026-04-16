@@ -4,6 +4,7 @@ import {
   FileText, TrendingUp, Grid3X3, BarChart3, 
   Sparkles, Check, Calculator, ShieldAlert, Cpu
 } from 'lucide-react';
+import { API_BASE } from '@/lib/api';
 
 const steps = [
   { label: 'Reading your statement...', icon: FileText },
@@ -58,7 +59,7 @@ const AnalyzingStepper = ({ sessionId, isDemo, mockData, onComplete, onError }: 
       return () => clearInterval(interval);
     }
 
-    const eventSource = new EventSource(`http://localhost:8000/api/stream/${sessionId}`);
+    const eventSource = new EventSource(`${API_BASE}/api/stream/${sessionId}`);
 
     eventSource.onmessage = (event) => {
       try {

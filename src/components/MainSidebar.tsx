@@ -15,6 +15,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
+import { API_BASE } from '@/lib/api';
 import {
   Dialog,
   DialogContent,
@@ -63,7 +64,7 @@ const MainSidebar = () => {
     if (!token) return;
     const fetchRecents = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/user/history', {
+        const response = await fetch(`${API_BASE}/api/user/history`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         if (response.ok) {
@@ -83,7 +84,7 @@ const MainSidebar = () => {
     if (!feedback.trim()) return;
     setIsSending(true);
     try {
-      const response = await fetch('http://localhost:8000/api/user/feedback', {
+      const response = await fetch(`${API_BASE}/api/user/feedback`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

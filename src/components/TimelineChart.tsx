@@ -42,11 +42,11 @@ const TimelineChart = ({ points }: TimelineChartProps) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.4, delay: 0.32 }}
-    className="glass-card p-6"
+    className="glass-card p-4 sm:p-6"
   >
     <h3 className="card-section-header mb-1">PORTFOLIO TIMELINE</h3>
     <p className="font-body text-sm text-text-secondary mb-6 ml-[18px]">Your portfolio growth journey</p>
-    <div className="h-[280px]">
+    <div className="h-[220px] sm:h-[280px]">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={points} margin={{ top: 10, right: 10, bottom: 0, left: -10 }}>
           <defs>
