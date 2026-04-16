@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { toast } from 'sonner';
 import { API_BASE } from '@/lib/api';
+import { useGoogleLogin } from '@react-oauth/google';
 
 const GoogleIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -88,28 +89,30 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
     }
   };
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleSuccess = async (tokenResponse: any) => {
     setLoading(true);
     try {
-      // In a real production app, you would use google_auth_sdk to get a token
-      // For this hackathon demo, we simulate the success of the Google SDK and send a request to our backend
-      const mockGoogleData = {
-        token: "G-MOCK-TOKEN-" + Math.random().toString(36).substring(7),
-        email: "demo-investor@gmail.com",
-        username: "Demo Investor",
-        picture: "https://i.pravatar.cc/150?u=demo"
-      };
+      // 1. Fetch user info from Google using the access token
+      const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+      });
+      const googleUser = await res.json();
 
+      // 2. Send verified data to our backend
       const response = await fetch(`${API_BASE}/api/auth/google`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(mockGoogleData),
+        body: JSON.stringify({
+          token: tokenResponse.access_token,
+          email: googleUser.email,
+          username: googleUser.name,
+          picture: googleUser.picture
+        }),
       });
 
       const data = await response.json();
-
       if (!response.ok) throw new Error(data.detail || 'Google authentication failed');
 
       setAuth(data.user, data.access_token);
@@ -121,6 +124,11 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
       setLoading(false);
     }
   };
+
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: handleGoogleSuccess,
+    onError: () => toast.error("Google Login Failed")
+  });
 
   return (
     <AnimatePresence>
@@ -292,7 +300,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
                {/* Social icons */}
                 <div className="flex justify-center items-center gap-10">
                   <button 
-                    onClick={handleGoogleLogin}
+                    onClick={() => loginWithGoogle()}
                     disabled={loading}
                     className="relative group transition-transform hover:scale-110 active:scale-95 disabled:opacity-50"
                   >

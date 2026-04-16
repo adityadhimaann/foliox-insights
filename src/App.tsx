@@ -13,6 +13,7 @@ import Settings from "./pages/Settings";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./context/AuthContext";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const queryClient = new QueryClient();
 
@@ -37,13 +38,15 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider forcedTheme="light" attribute="class" defaultTheme="light">
       <TooltipProvider>
-        <AuthProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <AnimatedRoutes />
-          </BrowserRouter>
-        </AuthProvider>
+        <GoogleOAuthProvider clientId="908941644691-kr486dhvq08jcnl6523f4da716mle64j.apps.googleusercontent.com">
+          <AuthProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <AnimatedRoutes />
+            </BrowserRouter>
+          </AuthProvider>
+        </GoogleOAuthProvider>
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>
