@@ -45,7 +45,7 @@ const DeviceMockups = () => {
   if (window.self !== window.top) return null;
 
   return (
-    <div className="absolute right-[1%] xl:right-[5%] top-[28%] lg:top-[28%] -translate-y-1/2 w-[560px] z-10 lg:block hidden">
+    <div className="absolute right-0 xl:right-[2%] top-1/2 -translate-y-1/2 w-[560px] z-10 lg:block hidden opacity-90 xl:opacity-100">
       <motion.div
         className="relative"
         initial={{ opacity: 0, y: 40 }}
@@ -468,7 +468,7 @@ const HeroSection = () => {
       <div className="lg:hidden absolute bottom-0 left-1/2 -translate-x-1/2 w-[150%] h-[30%] bg-primary/10 blur-[100px] rounded-full pointer-events-none z-0" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-24 md:py-[120px] relative w-full flex-1 flex flex-col">
-        <div className="flex-1 flex flex-col justify-center items-center sm:items-start text-center sm:text-left relative z-20">
+        <div className="flex-1 flex flex-col justify-center items-center sm:items-start text-center sm:text-left relative z-20 lg:max-w-[640px]">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
