@@ -19,6 +19,12 @@ class UserLoginRequest(BaseModel):
     email: str
     password: str
 
+class GoogleLoginRequest(BaseModel):
+    token: str
+    email: str
+    username: str
+    picture: str | None = None
+
 @router.post("/signup", response_model=UserSignupResponse)
 async def signup(user_in: UserCreate):
     """User registration via MongoDB"""
@@ -74,6 +80,40 @@ async def login(login_data: UserLoginRequest):
         "action": "login",
         "timestamp": datetime.utcnow()
     })
+    
+    return {
+        "access_token": access_token, 
+        "token_type": "bearer", 
+        "user": {
+            "email": user["email"], 
+            "username": user["username"]
+        }
+    }
+
+@router.post("/google")
+async def google_login(data: GoogleLoginRequest):
+    """Google OAuth authentication (Mocked for Demo, but structured for Real SDK)"""
+    # In a real app, verify the 'token' using google-auth library:
+    # idinfo = id_token.verify_oauth2_token(data.token, requests.Request(), CLIENT_ID)
+    
+    # Check if user exists
+    user = await mongo_db.users.find_one({"email": data.email})
+    
+    if not user:
+        # Auto-signup for Google users
+        user = {
+            "id": str(uuid.uuid4()),
+            "username": data.username,
+            "email": data.email,
+            "hashed_password": "GOOGLE_AUTH_USER", # No password needed
+            "is_active": True,
+            "created_at": datetime.utcnow(),
+            "picture": data.picture
+        }
+        await mongo_db.users.insert_one(user)
+    
+    # Issue JWT Token
+    access_token = create_access_token(data={"sub": user["email"]})
     
     return {
         "access_token": access_token, 

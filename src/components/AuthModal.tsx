@@ -38,7 +38,15 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
 
   useEffect(() => {
     setMode(initialMode);
-  }, [initialMode]);
+    setFormData({ username: '', email: '', password: '' });
+  }, [initialMode, isOpen]);
+
+  // Handle mode toggle separately to clear fields
+  const toggleMode = () => {
+    const newMode = mode === 'login' ? 'signup' : 'login';
+    setMode(newMode);
+    setFormData({ username: '', email: '', password: '' });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,6 +83,40 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
       }
     } catch (error: any) {
       toast.error(error.message || "Failed to connect to backend");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    try {
+      // In a real production app, you would use google_auth_sdk to get a token
+      // For this hackathon demo, we simulate the success of the Google SDK and send a request to our backend
+      const mockGoogleData = {
+        token: "G-MOCK-TOKEN-" + Math.random().toString(36).substring(7),
+        email: "demo-investor@gmail.com",
+        username: "Demo Investor",
+        picture: "https://i.pravatar.cc/150?u=demo"
+      };
+
+      const response = await fetch(`${API_BASE}/api/auth/google`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(mockGoogleData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.detail || 'Google authentication failed');
+
+      setAuth(data.user, data.access_token);
+      toast.success(`Welcome, ${data.user.username}! Signed in via Google.`);
+      onClose();
+    } catch (error: any) {
+      toast.error(error.message || "Failed to authenticate with Google");
     } finally {
       setLoading(false);
     }
@@ -248,8 +290,12 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
                </div>
 
                {/* Social icons */}
-               <div className="flex justify-center items-center gap-10">
-                  <button className="relative group transition-transform hover:scale-110 active:scale-95">
+                <div className="flex justify-center items-center gap-10">
+                  <button 
+                    onClick={handleGoogleLogin}
+                    disabled={loading}
+                    className="relative group transition-transform hover:scale-110 active:scale-95 disabled:opacity-50"
+                  >
                      <div className="absolute -inset-4 bg-primary/5 rounded-full scale-0 group-hover:scale-100 transition-transform duration-200" />
                      <div className="relative group-hover:drop-shadow-[0_0_8px_rgba(66,133,244,0.4)] transition-all scale-90">
                         <GoogleIcon />
@@ -266,7 +312,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }: AuthModalProps) =
                   <p className="font-body text-sm text-text-secondary">
                      {mode === 'login' ? "Don't have an account?" : "Already have an account?"} 
                      <button 
-                        onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
+                        onClick={toggleMode}
                         className="text-primary font-bold hover:underline ml-1.5"
                      >
                         {mode === 'login' ? 'Sign up for free' : 'Sign in here'}
