@@ -45,7 +45,7 @@ const DeviceMockups = () => {
   if (window.self !== window.top) return null;
 
   return (
-    <div className="absolute right-0 xl:right-[2%] top-1/2 -translate-y-1/2 w-[560px] z-10 lg:block hidden opacity-90 xl:opacity-100">
+    <div className="absolute right-0 xl:right-[2%] top-[28%] -translate-y-1/2 w-[560px] z-10 lg:block hidden">
       <motion.div
         className="relative"
         initial={{ opacity: 0, y: 40 }}
@@ -463,7 +463,7 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative overflow-hidden flex flex-col min-h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:h-auto">
+    <section className="relative overflow-hidden flex flex-col min-h-[calc(100dvh-3.5rem)] lg:min-h-[90vh]">
       {/* Mobile-only background elements to fill space */}
       <div className="lg:hidden absolute bottom-0 left-1/2 -translate-x-1/2 w-[150%] h-[30%] bg-primary/10 blur-[100px] rounded-full pointer-events-none z-0" />
       
