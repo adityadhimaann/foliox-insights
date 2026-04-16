@@ -45,7 +45,7 @@ const DeviceMockups = () => {
   if (window.self !== window.top) return null;
 
   return (
-    <div className="hidden lg:block absolute right-[1%] xl:right-[5%] top-[28%] -translate-y-1/2 w-[560px] z-10">
+    <div className="absolute right-[1%] xl:right-[5%] top-[28%] lg:top-[28%] -translate-y-1/2 w-[560px] z-10 lg:block hidden">
       <motion.div
         className="relative"
         initial={{ opacity: 0, y: 40 }}
@@ -155,6 +155,27 @@ const DeviceMockups = () => {
             />
           </div>
         </motion.div>
+      </motion.div>
+    </div>
+  );
+};
+
+const MobileMockupOnly = () => {
+  return (
+    <div className="lg:hidden absolute bottom-[-5%] right-[-5%] w-[200px] aspect-[9/19.5] z-0 opacity-30 blur-[0.5px]">
+      <motion.div
+        initial={{ opacity: 0, x: 50, rotate: 5 }}
+        animate={{ opacity: 1, x: 0, rotate: -15 }}
+        transition={{ duration: 1, delay: 0.8 }}
+        className="w-full h-full rounded-[40px] border-[6px] border-[#6a6a70] bg-[#6a6a70] overflow-hidden shadow-2xl"
+        style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}
+      >
+        <div className="w-full h-full overflow-hidden rounded-[34px] bg-black">
+          <LazyVideo 
+            src="/mobile.mp4" 
+            className="w-full h-full object-cover select-none"
+          />
+        </div>
       </motion.div>
     </div>
   );
@@ -442,8 +463,11 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative overflow-hidden" style={{ minHeight: '80vh' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 md:py-[120px] relative">
+    <section className="relative overflow-hidden flex flex-col justify-center min-h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:h-auto">
+      {/* Mobile-only background elements to fill space */}
+      <div className="lg:hidden absolute bottom-0 left-1/2 -translate-x-1/2 w-[150%] h-[30%] bg-primary/10 blur-[100px] rounded-full pointer-events-none z-0" />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-24 md:py-[120px] relative w-full flex flex-col justify-center">
         <div className="max-w-[640px] relative z-20">
           <motion.p
             initial={{ opacity: 0, y: 12 }}
@@ -455,8 +479,8 @@ const HeroSection = () => {
             <span className="inline-block w-[2px] h-4 bg-primary ml-1 align-middle" style={{ animation: 'typing-dots 1s step-end infinite' }} />
           </motion.p>
 
-          <div className="mb-6">
-            <h1 className="font-heading text-[32px] sm:text-[40px] md:text-[60px] lg:text-[64px] text-foreground leading-[1.15]">
+          <div className="mb-4 sm:mb-6">
+            <h1 className="font-heading text-[32px] sm:text-[40px] md:text-[60px] lg:text-[64px] text-foreground leading-[1.1] sm:leading-[1.15]">
               {words.map((word, i) => (
                 <motion.span
                   key={i}
@@ -475,9 +499,9 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.4 }}
-            className="font-body text-base sm:text-lg md:text-xl text-text-secondary leading-relaxed mb-8 sm:mb-10"
+            className="font-body text-[15px] sm:text-lg md:text-xl text-text-secondary leading-relaxed mb-6 sm:mb-10 max-w-[500px]"
           >
-            Upload your CAMS or KFintech statement. Get your Portfolio Health Score, true XIRR, fund overlap analysis, and a plain-English rebalancing plan — in under 10 seconds.
+            Upload your CAS statement. Get Portfolio Health, true XIRR, fund overlap, and an AI rebalancing plan — in seconds.
           </motion.p>
 
           <motion.div
@@ -503,24 +527,49 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
+        <MobileMockupOnly />
         <DeviceMockups />
 
         {/* Mobile stat pills — grid so all 3 fit without scrolling */}
-        <div className="lg:hidden grid grid-cols-3 gap-2 sm:gap-3 mt-8 sm:mt-10">
+        <div className="lg:hidden grid grid-cols-3 gap-3 mt-10 sm:mt-12">
           {[
-            { number: '14 Cr+', label: 'Demat Holders', Icon: Users },
+            { number: '14 Cr+', label: 'Holders', Icon: Users },
             { number: '₹0', label: 'Completely Free', Icon: BadgeDollarSign },
-            { number: '10 Sec', label: 'Instant Analysis', Icon: Timer },
-          ].map(stat => (
-            <div key={stat.label} className="px-2 py-3 sm:px-5 sm:py-4 text-center rounded-2xl bg-foreground/[0.03] border border-border/50 backdrop-blur-sm">
-              <stat.Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary mx-auto mb-1" />
-              <AnimatedCounter value={stat.number} />
-              <p className="font-body text-[10px] sm:text-[11px] text-text-muted mt-1 leading-tight">{stat.label}</p>
-            </div>
+            { number: '10 Sec', label: 'Analysis', Icon: Timer },
+          ].map((stat, i) => (
+            <motion.div 
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.6 + i * 0.1 }}
+              className="relative p-3 text-center rounded-[20px] bg-foreground/[0.03] border border-border/50 backdrop-blur-md flex flex-col items-center justify-center gap-1 group overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <stat.Icon className="w-4 h-4 text-primary relative z-10" />
+              <div className="relative z-10">
+                <span className="font-mono text-base font-bold text-foreground block">{stat.number}</span>
+                <p className="font-body text-[9px] text-text-muted leading-tight uppercase tracking-wider font-bold">{stat.label}</p>
+              </div>
+            </motion.div>
           ))}
         </div>
 
         <StatsChart />
+
+        {/* Scroll Indicator */}
+        <motion.div 
+          className="lg:hidden absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40 mt-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          transition={{ delay: 2 }}
+        >
+          <span className="font-mono text-[9px] uppercase tracking-[0.2em]">Explore</span>
+          <motion.div 
+            className="w-[1px] h-8 bg-gradient-to-b from-primary to-transparent"
+            animate={{ height: [0, 32, 0], opacity: [0, 1, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+        </motion.div>
       </div>
     </section>
   );
